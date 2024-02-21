@@ -1,10 +1,9 @@
-import { Application } from "./app/components/application";
-import { Character } from "./app/components/character";
-import { Square } from "./app/components/square";
+import { GameApp } from "./app/components/application";
+import { Character } from "./app/models/character";
+import { Square } from "./app/models/square";
 
-const app = new Application();
+const app = new GameApp();
 
-const squares: Square[] = [];
 const character = new Character();
 app.stage.addChild(character.sprite);
 
@@ -16,4 +15,4 @@ window.addEventListener("keydown", (e) => {
     character.moveUp(square.size.height);
   }
 });
-app.start(character);
+app.runGame(character);

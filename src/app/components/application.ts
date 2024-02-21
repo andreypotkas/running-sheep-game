@@ -1,13 +1,14 @@
 import * as PIXI from "pixi.js";
 import { APP_HEIGHT, APP_WIDTH } from "../constants";
-import { CharacterInterface } from "./character";
-import { SquareInterface } from "./square";
+import { CharacterInterface } from "../models/character";
+import { SquareInterface } from "../models/square";
+import { createGround } from "./ground";
+import { renderResetButton } from "./utils";
 
-let gameShiftX = 0;
-
-export class Application {
+export class GameApp {
   private readonly app: PIXI.Application<HTMLCanvasElement>;
   public squares: SquareInterface[] = [];
+  private ground: PIXI.Graphics;
 
   constructor() {
     this.app = new PIXI.Application<HTMLCanvasElement>({
@@ -16,7 +17,8 @@ export class Application {
       backgroundColor: 0x1099bb,
     });
 
-    this.app.stage.on("gameover", () => this.app.stop());
+    this.ground = createGround();
+    this.app.stage.addChild(this.ground);
   }
 
   public get stage(): PIXI.Container {
@@ -27,43 +29,32 @@ export class Application {
     return this.app.view;
   }
 
-  public start(character: CharacterInterface): void {
+  public runGame(character: CharacterInterface): void {
+    window.moveTo(0, 0);
     document.body.appendChild(this.view);
 
     this.app.ticker.add((delta) => {
       character.moveForward();
-      this.squares.forEach((square: SquareInterface) => square.moveForward());
-
-      const screenCenterX = window.innerWidth / 2;
-
-      // Check if character reaches the center of the screen
-      if (character.getPositionX() > screenCenterX) {
-        // Scroll the window to keep the character centered
-
-        window.scroll(character.getPositionX() - screenCenterX, 0);
-      }
-
-      if (character.getPositionX() >= APP_WIDTH) {
-        this.gameOver();
-      }
+      this.squares.forEach((obstacle: SquareInterface) => obstacle.moveForward());
+      this.scrollToCenterIfNeeded(character.x);
+      if (character.isFinishReached()) this.endGame();
     });
   }
 
-  public stop(): void {
+  public endGame(): void {
     this.app.ticker.stop();
-    if (this.gameOver) {
-      this.gameOver();
-    }
+    this.showGameOverScreen();
   }
 
-  public gameOver(): void {
-    const restartButton = new PIXI.Text("Restart", { fontSize: 24, fill: 0xffffff });
-    restartButton.interactive = true;
-    restartButton.anchor.set(0.5);
-    restartButton.position.set(APP_WIDTH / 2, APP_HEIGHT / 2);
-    restartButton.on("pointerdown", () => {
-      window.location.reload();
-    });
+  private showGameOverScreen(): void {
+    const restartButton = renderResetButton();
     this.app.stage.addChild(restartButton);
+  }
+
+  private scrollToCenterIfNeeded(characterPosition: number) {
+    const screenCenterX = window.innerWidth / 2;
+    if (characterPosition > screenCenterX) {
+      window.scroll(characterPosition - screenCenterX, 0);
+    }
   }
 }
