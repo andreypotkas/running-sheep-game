@@ -17,7 +17,9 @@ export class Character {
   constructor() {
     this.texture = PIXI.Texture.from("assets/img/character.jpg");
     this.sprite = new PIXI.Sprite(this.texture);
-    this.sprite.position.set(0, APP_HEIGHT - 430);
+    this.sprite.width = 100;
+    this.sprite.height = 100;
+    this.sprite.position.set(0, APP_HEIGHT - 400);
   }
 
   public moveUp(squareHeight: number): void {

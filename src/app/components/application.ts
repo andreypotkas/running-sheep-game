@@ -2,13 +2,13 @@ import * as PIXI from "pixi.js";
 import { APP_HEIGHT, APP_WIDTH } from "../constants";
 import { CharacterInterface } from "../models/character";
 import { SquareInterface } from "../models/square";
-import { createGround } from "./ground";
+import { Ground } from "./ground";
 import { renderResetButton } from "./utils";
 
 export class GameApp {
   private readonly app: PIXI.Application<HTMLCanvasElement>;
   public squares: SquareInterface[] = [];
-  private ground: PIXI.Graphics;
+  private readonly ground: Ground;
 
   constructor() {
     this.app = new PIXI.Application<HTMLCanvasElement>({
@@ -17,8 +17,7 @@ export class GameApp {
       backgroundColor: 0x1099bb,
     });
 
-    this.ground = createGround();
-    this.app.stage.addChild(this.ground);
+    this.ground = new Ground(this.app);
   }
 
   public get stage(): PIXI.Container {
