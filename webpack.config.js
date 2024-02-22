@@ -10,7 +10,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  entry: "./src/app.ts",
+  entry: { app: "./src/app.ts", style: "./src/index.scss" },
   devtool: "source-map",
   output: {
     filename: "[name].js",
