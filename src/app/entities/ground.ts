@@ -22,7 +22,7 @@ export class Ground {
     for (let i = 1; i < numberOfObstacles; i++) {
       const pitX = roundToCeilWithZeroLastDigit(i * spaceBetweenObstacles * 2);
       const pitY = APP_HEIGHT - GROUND_HEIGHT;
-      const pit = new Pit(pitX, pitY, 2, 2, "assets/img/pit.jpg");
+      const pit = new Pit(this.app, pitX, pitY, 2, 2, "assets/img/pit.jpg");
       this.pits.push(pit);
       this.app.stage.addChild(pit.sprite);
     }
@@ -30,7 +30,7 @@ export class Ground {
     for (let i = 1; i < numberOfObstacles; i++) {
       const boxX = roundToCeilWithZeroLastDigit(i * spaceBetweenObstacles * 2 + spaceBetweenObstacles);
       const boxY = APP_HEIGHT - GROUND_HEIGHT - BASE_ENTITY_SIZE * i;
-      const box = new Box(boxX, boxY, 1, i, "assets/img/box.jpg");
+      const box = new Box(this.app, boxX, boxY, 1, i, "assets/img/box.jpg");
       this.boxes.push(box);
       this.app.stage.addChild(box.sprite);
     }

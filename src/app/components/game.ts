@@ -2,7 +2,6 @@ import * as PIXI from "pixi.js";
 import { APP_HEIGHT, APP_WIDTH, BASE_ENTITY_SIZE, GROUND_HEIGHT } from "../constants";
 import { Character, CharacterInterface } from "../entities/character";
 import { Ground } from "../entities/ground";
-import { Platform, PlatformInterface } from "../entities/platform";
 import { CollisionDetector } from "../lib/collisionDetector";
 import { createSpriteFromImage, renderResetButton } from "./utils";
 
@@ -10,12 +9,11 @@ export class Game {
   readonly app: PIXI.Application<HTMLCanvasElement>;
   private readonly ground: Ground;
   public readonly character: CharacterInterface;
-  public platforms: PlatformInterface[] = [];
 
   constructor() {
     this.app = new PIXI.Application<HTMLCanvasElement>({ width: APP_WIDTH, height: APP_HEIGHT });
     const background = createSpriteFromImage("assets/img/base-bg.jpg", APP_WIDTH, APP_HEIGHT, 0, 0);
-    this.character = new Character(0, APP_HEIGHT - GROUND_HEIGHT - BASE_ENTITY_SIZE, 1, 1, "assets/img/character.jpg");
+    this.character = new Character(this.app, 0, APP_HEIGHT - GROUND_HEIGHT - BASE_ENTITY_SIZE, 1, 1, "assets/img/character.jpg");
     this.ground = new Ground(this.app);
 
     this.app.stage.addChild(background);
@@ -23,14 +21,6 @@ export class Game {
     this.ground.addPitsAndBoxes(4);
     this.app.stage.addChild(this.character.sprite);
 
-    window.addEventListener("keydown", (e) => {
-      if (e.code === "Space") {
-        const platform = new Platform(this.character.sprite.x, this.character.sprite.y, 1, 1, "assets/img/platform.jpg");
-        this.app.stage.addChild(platform.sprite);
-        this.platforms.push(platform);
-        this.character.moveUp(platform.sprite.height);
-      }
-    });
     this.runGame();
   }
 
@@ -38,10 +28,9 @@ export class Game {
     document.body.appendChild(this.app.view);
 
     this.app.ticker.add((delta) => {
-      this.character.update();
-      this.platforms.forEach((platform: PlatformInterface) => platform.moveForward());
-      this.checkObstacleCollisions(this.character);
-      if (this.character.isFinishReached()) this.endGame();
+      this.character.update(this.endGame);
+      this.checkObstacleCollisions();
+      // if (this.character.y > APP_HEIGHT - GROUND_HEIGHT) this.endGame();
     });
   }
 
@@ -55,27 +44,56 @@ export class Game {
     this.app.stage.addChild(restartButton);
   }
 
-  private checkObstacleCollisions(character: CharacterInterface): void {
+  private checkObstacleCollisions(): void {
     const pits = this.ground.getPits();
     const boxes = this.ground.getBoxes();
 
     pits.forEach((pit) => {
-      const isCollided = CollisionDetector.characterPitCollision(character, pit);
+      const isCharacterReachedPit = CollisionDetector.isCharacterReachedPit(this.character, pit);
 
-      if (isCollided) {
-        console.log("Boom with pit!");
-        this.character.moveDown(pit.height);
+      if (isCharacterReachedPit) {
+        this.character.moveDown(pit.heightSize);
+      }
+
+      const isCharacterCollidedPit = CollisionDetector.isCharacterCollidedPit(this.character, pit);
+
+      if (isCharacterCollidedPit) {
         this.endGame();
       }
+
+      this.character.platforms.forEach((item) => {
+        const isPlatformCollidedPit = CollisionDetector.isPlatformCollidedPit(item, pit);
+
+        if (isPlatformCollidedPit) {
+          item.stop();
+        }
+      });
     });
 
     boxes.forEach((box) => {
-      const isCollided = CollisionDetector.characterBoxCollision(character, box);
+      const isCharacterCollidedBox = CollisionDetector.isCharacterCollidedBox(this.character, box);
+      const isCharacterLeaveBox = CollisionDetector.isCharacterLeaveBox(this.character, box);
 
-      if (isCollided) {
-        console.log("Boom with box!");
+      if (isCharacterCollidedBox) {
         this.endGame();
       }
+
+      if (isCharacterLeaveBox) {
+        this.character.moveDown(box.heightSize);
+      }
+
+      this.character.platforms.forEach((item) => {
+        const isPlatformCollidedBox = CollisionDetector.isPlatformCollidedBox(item, box);
+        const isPlatformLeaveBox = CollisionDetector.isPlatformLeaveBox(item, box);
+
+        if (isPlatformCollidedBox) {
+          item.stop();
+        }
+
+        if (isPlatformLeaveBox) {
+          item.moveDown(box.heightSize);
+        }
+      });
     });
   }
 }
