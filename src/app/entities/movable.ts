@@ -28,7 +28,7 @@ export class MovableEntity extends Entity implements MovableEntityInterface {
 
   public moveForward() {
     this.x += HORIZONTAL_MOVE_STEP;
-    gsap.to(this.sprite, { duration: 0.05, y: this.estimatedY });
+    gsap.to(this.sprite, { duration: 0.2, y: this.estimatedY });
   }
 
   public moveDown(steps: number) {

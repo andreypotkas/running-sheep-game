@@ -12,19 +12,17 @@ export interface GroundInterface {
   getBoxes(): Pit[];
 }
 const groundPitSizes = [
-  { w: 2, h: 1 },
   { w: 2, h: 2 },
-  { w: 3, h: 1 },
+  { w: 2, h: 2 },
   { w: 2, h: 2 },
   { w: 2, h: 2 },
 ];
 
 const groundBoxSizes = [
-  { w: 2, h: 1 },
-  { w: 2, h: 2 },
-  { w: 3, h: 2 },
-  { w: 2, h: 3 },
-  { w: 2, h: 1 },
+  { w: 1, h: 2 },
+  { w: 1, h: 1 },
+  { w: 1, h: 2 },
+  { w: 1, h: 1 },
 ];
 
 export class Ground implements GroundInterface {
