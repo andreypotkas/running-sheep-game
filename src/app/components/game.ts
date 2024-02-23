@@ -12,7 +12,7 @@ export class Game {
   public readonly collisionDetector: CollisionDetector;
 
   constructor() {
-    this.app = new PIXI.Application<HTMLCanvasElement>({ width: APP_WIDTH, height: APP_HEIGHT });
+    this.app = new PIXI.Application<HTMLCanvasElement>({ width: APP_WIDTH, height: APP_HEIGHT, resizeTo: window });
     const background = createSpriteFromImage("assets/img/base-bg.jpg", APP_WIDTH, APP_HEIGHT, 0, 0);
     const mountain = createSpriteFromImage("assets/img/mountain.png", APP_WIDTH, APP_HEIGHT / 2, 0, 100);
     this.character = new Character(this.app, 0, APP_HEIGHT - GROUND_HEIGHT - BASE_ENTITY_SIZE, 1, 1, "assets/img/character.png");
@@ -22,8 +22,12 @@ export class Game {
     this.app.stage.addChild(background);
     this.app.stage.addChild(mountain);
     this.app.stage.addChild(this.ground.sprite);
-    this.ground.addPitsAndBoxes(4);
+    this.ground.addPitsAndBoxes();
     this.app.stage.addChild(this.character.sprite);
+
+    window.addEventListener("resize", () => {
+      this.app.renderer.resize(APP_WIDTH, APP_HEIGHT);
+    });
   }
 
   public runGame(): void {

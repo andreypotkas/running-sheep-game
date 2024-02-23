@@ -48,40 +48,40 @@ class AppConfiguration implements AppConfigurationInterface {
   initAppConstants() {
     let appWidth;
     let appHeight;
-    let groundHeight;
-    let groundLevel;
+    let baseEntitySize;
+    let verticalMoveStep;
 
     if (this.isMobileDevice) {
       if (this.isLandscapeOrientation) {
-        // На мобильных устройствах в альбомной ориентации
-        appWidth = window.innerWidth * 4;
-        appHeight = window.innerHeight;
-        groundHeight = appHeight / 4;
-        groundLevel = appHeight - groundHeight;
-      } else {
-        // На мобильных устройствах в портретной ориентации
         appWidth = window.innerWidth * 10;
         appHeight = window.innerHeight;
-        groundHeight = appHeight / 4;
-        groundLevel = appHeight - groundHeight;
-        console.log(appHeight, appWidth);
+        baseEntitySize = 50;
+        verticalMoveStep = 50;
+      } else {
+        appWidth = window.innerWidth * 20;
+        appHeight = window.innerHeight;
+        baseEntitySize = 50;
+        verticalMoveStep = 50;
       }
     } else {
-      // На десктопе
-      appWidth = window.innerWidth * 2;
+      baseEntitySize = 100;
+      verticalMoveStep = 100;
+      appWidth = window.innerWidth * 10;
       appHeight = window.innerHeight;
-      groundHeight = appHeight / 4;
-      groundLevel = appHeight - groundHeight;
     }
+
+    const groundHeight = Math.ceil(appHeight / 3);
+    const groundLevel = appHeight - groundHeight;
+    const horizontalMoveStep = 5;
 
     return {
       APP_WIDTH: appWidth,
       APP_HEIGHT: appHeight,
       GROUND_HEIGHT: groundHeight,
       GROUND_LEVEL: groundLevel,
-      BASE_ENTITY_SIZE: 100,
-      VERTICAL_MOVE_STEP: 100,
-      HORIZONTAL_MOVE_STEP: 5,
+      BASE_ENTITY_SIZE: baseEntitySize,
+      VERTICAL_MOVE_STEP: verticalMoveStep,
+      HORIZONTAL_MOVE_STEP: horizontalMoveStep,
     };
   }
 }

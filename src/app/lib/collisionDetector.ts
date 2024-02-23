@@ -18,24 +18,24 @@ export class CollisionDetector {
     return character.x === pit.x;
   }
   private isCharacterCollidedPit(character: CharacterInterface, pit: PitInterface): boolean {
-    return character.rightX === pit.rightX && character.bottomY > GROUND_LEVEL;
+    return character.rightX === pit.rightX && character.estimatedBottomY > GROUND_LEVEL;
   }
 
   private isCharacterReachedBox(character: CharacterInterface, box: BoxInterface): boolean {
     return character.rightX === box.x;
   }
   private isCharacterCollidedBox(character: CharacterInterface, box: BoxInterface): boolean {
-    return character.rightX === box.x && character.bottomY > box.y;
+    return character.rightX === box.x && character.estimatedBottomY > box.y;
   }
   private isCharacterLeaveBox(character: CharacterInterface, box: BoxInterface): boolean {
     return character.x === box.rightX;
   }
 
   private isPlatformCollidedPit(platform: PlatformInterface, pit: PitInterface): boolean {
-    return platform.rightX === pit.rightX && platform.bottomY > GROUND_LEVEL;
+    return platform.rightX === pit.rightX && platform.estimatedBottomY > GROUND_LEVEL;
   }
   private isPlatformCollidedBox(platform: PlatformInterface, box: BoxInterface): boolean {
-    return platform.rightX === box.x && platform.bottomY > box.y;
+    return platform.rightX === box.x && platform.estimatedBottomY > box.y;
   }
   private isPlatformLeaveBox(platform: PlatformInterface, box: BoxInterface): boolean {
     return platform.x === box.rightX;

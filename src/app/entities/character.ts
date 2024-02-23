@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { APP_WIDTH } from "../constants";
+import { APP_WIDTH, HORIZONTAL_MOVE_STEP } from "../constants";
 import { MovableEntity, MovableEntityInterface } from "./movable";
 import { Platform, PlatformInterface } from "./platform";
 
@@ -26,7 +26,7 @@ export class Character extends MovableEntity {
 
   public update(callback: () => void) {
     this.moveForward();
-    this.scrollWindowToCenter();
+    this.moveStage();
     this.movingPlatforms.forEach((platform: PlatformInterface) => platform.moveForward());
     if (this.isFinishReached()) callback();
   }
@@ -35,9 +35,8 @@ export class Character extends MovableEntity {
     return !!(this.x >= APP_WIDTH - 200);
   }
 
-  private scrollWindowToCenter() {
-    const screenCenterX = window.screen.width / 2;
-    window.scroll(this.x - screenCenterX, 0);
+  private moveStage() {
+    if (this.x > 100) this.app.stage.position.x -= HORIZONTAL_MOVE_STEP;
   }
 
   private addPlatform() {
