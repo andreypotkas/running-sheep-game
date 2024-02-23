@@ -21,6 +21,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: "Pixi / Typescript seed",
+      template: "./src/index.html",
     }),
     new CopyPlugin({
       patterns: [

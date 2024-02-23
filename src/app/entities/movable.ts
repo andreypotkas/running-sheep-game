@@ -7,10 +7,8 @@ export interface MovableEntityInterface extends EntityInterface {
   estimatedY: number;
   estimatedBottomY: number;
   moveUp(): void;
-  moveUpSmooth(): void;
   moveForward(): void;
   moveDown(steps: number): void;
-  moveDownSmooth(steps: number): void;
 }
 
 export class MovableEntity extends Entity implements MovableEntityInterface {
@@ -28,20 +26,12 @@ export class MovableEntity extends Entity implements MovableEntityInterface {
     this.estimatedY = this.estimatedY - VERTICAL_MOVE_STEP;
   }
 
-  public moveUpSmooth(): void {
-    gsap.to(this.sprite, { duration: 0.2, y: this.y - VERTICAL_MOVE_STEP });
-  }
-
   public moveForward() {
     this.x += HORIZONTAL_MOVE_STEP;
-    gsap.to(this.sprite, { duration: 0.1, y: this.estimatedY });
+    gsap.to(this.sprite, { duration: 0.05, y: this.estimatedY });
   }
 
   public moveDown(steps: number) {
     this.estimatedY = this.estimatedY + VERTICAL_MOVE_STEP * steps;
-  }
-
-  public moveDownSmooth(steps: number) {
-    gsap.to(this.sprite, { duration: 0.2 * steps, y: this.y + VERTICAL_MOVE_STEP * steps });
   }
 }

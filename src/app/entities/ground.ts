@@ -37,7 +37,7 @@ export class Ground implements GroundInterface {
     for (let i = 1; i < numberOfObstacles; i++) {
       const boxX = roundToCeilWithZeroLastDigit(i * spaceBetweenObstacles * 2 + spaceBetweenObstacles);
       const boxY = APP_HEIGHT - GROUND_HEIGHT - BASE_ENTITY_SIZE * i;
-      const box = new Box(this.app, boxX, boxY, 1, i, "assets/img/box.jpg");
+      const box = new Box(this.app, boxX, boxY, 1, i, "assets/img/box.png");
       this.boxes.push(box);
       this.app.stage.addChild(box.sprite);
     }

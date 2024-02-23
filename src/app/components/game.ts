@@ -6,22 +6,24 @@ import { CollisionDetector } from "../lib/collisionDetector";
 import { createSpriteFromImage, renderResetButton } from "./utils";
 
 export class Game {
-  readonly app: PIXI.Application<HTMLCanvasElement>;
-  private readonly ground: GroundInterface;
+  public readonly app: PIXI.Application<HTMLCanvasElement>;
+  public readonly ground: GroundInterface;
   public readonly character: CharacterInterface;
+  public readonly collisionDetector: CollisionDetector;
 
   constructor() {
     this.app = new PIXI.Application<HTMLCanvasElement>({ width: APP_WIDTH, height: APP_HEIGHT });
     const background = createSpriteFromImage("assets/img/base-bg.jpg", APP_WIDTH, APP_HEIGHT, 0, 0);
-    this.character = new Character(this.app, 0, APP_HEIGHT - GROUND_HEIGHT - BASE_ENTITY_SIZE, 1, 1, "assets/img/character.jpg");
+    const mountain = createSpriteFromImage("assets/img/mountain.png", APP_WIDTH, APP_HEIGHT / 2, 0, 100);
+    this.character = new Character(this.app, 0, APP_HEIGHT - GROUND_HEIGHT - BASE_ENTITY_SIZE, 1, 1, "assets/img/character.png");
     this.ground = new Ground(this.app);
+    this.collisionDetector = new CollisionDetector(this.ground, this.character, this.endGame.bind(this));
 
     this.app.stage.addChild(background);
+    this.app.stage.addChild(mountain);
     this.app.stage.addChild(this.ground.sprite);
     this.ground.addPitsAndBoxes(4);
     this.app.stage.addChild(this.character.sprite);
-
-    this.runGame();
   }
 
   public runGame(): void {
@@ -29,7 +31,7 @@ export class Game {
 
     this.app.ticker.add((delta) => {
       this.character.update(this.endGame);
-      this.checkObstacleCollisions();
+      this.collisionDetector.checkObstacleCollisions();
     });
   }
 
@@ -41,59 +43,5 @@ export class Game {
   private showGameOverScreen(): void {
     const restartButton = renderResetButton();
     this.app.stage.addChild(restartButton);
-  }
-
-  private checkObstacleCollisions(): void {
-    const pits = this.ground.getPits();
-    const boxes = this.ground.getBoxes();
-
-    pits.forEach((pit) => {
-      const isCharacterReachedPit = CollisionDetector.isCharacterReachedPit(this.character, pit);
-
-      if (isCharacterReachedPit) {
-        this.character.moveDown(pit.heightSize);
-        this.character.movingPlatforms.forEach((platform) => platform.moveDown(pit.heightSize));
-      }
-
-      const isCharacterCollidedPit = CollisionDetector.isCharacterCollidedPit(this.character, pit);
-
-      if (isCharacterCollidedPit) {
-        this.endGame();
-      }
-
-      this.character.platforms.forEach((item) => {
-        const isPlatformCollidedPit = CollisionDetector.isPlatformCollidedPit(item, pit);
-
-        if (isPlatformCollidedPit) {
-          item.stop();
-        }
-      });
-    });
-
-    boxes.forEach((box) => {
-      const isCharacterCollidedBox = CollisionDetector.isCharacterCollidedBox(this.character, box);
-      const isCharacterLeaveBox = CollisionDetector.isCharacterLeaveBox(this.character, box);
-
-      if (isCharacterCollidedBox) {
-        this.endGame();
-      }
-
-      if (isCharacterLeaveBox) {
-        this.character.moveDown(box.heightSize);
-      }
-
-      this.character.platforms.forEach((item) => {
-        const isPlatformCollidedBox = CollisionDetector.isPlatformCollidedBox(item, box);
-        const isPlatformLeaveBox = CollisionDetector.isPlatformLeaveBox(item, box);
-
-        if (isPlatformCollidedBox) {
-          item.stop();
-        }
-
-        if (isPlatformLeaveBox) {
-          item.moveDown(box.heightSize);
-        }
-      });
-    });
   }
 }

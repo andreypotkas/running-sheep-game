@@ -16,7 +16,8 @@ export class Character extends MovableEntity {
   constructor(app: PIXI.Application<HTMLCanvasElement>, x: number, y: number, widthCount: number, heightCount: number, resource: string) {
     super(app, x, y, widthCount, heightCount, resource);
 
-    window.addEventListener("keydown", (e) => this.handleJump(e));
+    window.addEventListener("keydown", (e) => this.handleKeyDown(e));
+    window.addEventListener("touchstart", (e) => this.handleTouch(e));
   }
 
   public get movingPlatforms() {
@@ -35,20 +36,25 @@ export class Character extends MovableEntity {
   }
 
   private scrollWindowToCenter() {
-    const screenCenterX = window.innerWidth / 2;
+    const screenCenterX = window.screen.width / 2;
     window.scroll(this.x - screenCenterX, 0);
   }
 
   private addPlatform() {
-    const platform = new Platform(this.app, this.x, this.estimatedBottomY, 1, 1, "assets/img/platform.jpg");
+    const platform = new Platform(this.app, this.x, this.estimatedBottomY, 1, 1, "assets/img/platform.png");
     this.app.stage.addChild(platform.sprite);
     this.platforms.push(platform);
   }
 
-  private handleJump(e: KeyboardEvent) {
+  private handleKeyDown(e: KeyboardEvent) {
     if (e.code === "Space") {
       this.moveUp();
       this.addPlatform();
     }
+  }
+
+  private handleTouch(e: TouchEvent) {
+    this.moveUp();
+    this.addPlatform();
   }
 }
