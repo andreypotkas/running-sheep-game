@@ -9,7 +9,7 @@ export class CollisionDetector {
     return character.x === pit.x;
   }
   public static isCharacterCollidedPit(character: CharacterInterface, pit: PitInterface): boolean {
-    return character.rightX === pit.rightX && character.bottomY >= GROUND_LEVEL;
+    return character.rightX === pit.rightX && character.bottomY > GROUND_LEVEL;
   }
 
   public static isCharacterReachedBox(character: CharacterInterface, box: BoxInterface): boolean {
@@ -23,7 +23,7 @@ export class CollisionDetector {
   }
 
   public static isPlatformCollidedPit(platform: PlatformInterface, pit: PitInterface): boolean {
-    return platform.rightX === pit.rightX && platform.bottomY >= GROUND_LEVEL;
+    return platform.rightX === pit.rightX && platform.bottomY > GROUND_LEVEL;
   }
   public static isPlatformCollidedBox(platform: PlatformInterface, box: BoxInterface): boolean {
     return platform.rightX === box.x && platform.bottomY > box.y;

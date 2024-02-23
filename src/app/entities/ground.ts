@@ -5,7 +5,14 @@ import { roundToCeilWithZeroLastDigit } from "../lib/utils";
 import { Box } from "./box";
 import { Pit } from "./pit";
 
-export class Ground {
+export interface GroundInterface {
+  sprite: PIXI.Sprite;
+  addPitsAndBoxes(numberOfObstacles: number): void;
+  getPits(): Pit[];
+  getBoxes(): Pit[];
+}
+
+export class Ground implements GroundInterface {
   private readonly app: PIXI.Application<HTMLCanvasElement>;
   private readonly pits: Pit[] = [];
   private readonly boxes: Box[] = [];

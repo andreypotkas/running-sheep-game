@@ -1,13 +1,13 @@
 import * as PIXI from "pixi.js";
 import { APP_HEIGHT, APP_WIDTH, BASE_ENTITY_SIZE, GROUND_HEIGHT } from "../constants";
 import { Character, CharacterInterface } from "../entities/character";
-import { Ground } from "../entities/ground";
+import { Ground, GroundInterface } from "../entities/ground";
 import { CollisionDetector } from "../lib/collisionDetector";
 import { createSpriteFromImage, renderResetButton } from "./utils";
 
 export class Game {
   readonly app: PIXI.Application<HTMLCanvasElement>;
-  private readonly ground: Ground;
+  private readonly ground: GroundInterface;
   public readonly character: CharacterInterface;
 
   constructor() {
@@ -30,7 +30,6 @@ export class Game {
     this.app.ticker.add((delta) => {
       this.character.update(this.endGame);
       this.checkObstacleCollisions();
-      // if (this.character.y > APP_HEIGHT - GROUND_HEIGHT) this.endGame();
     });
   }
 
@@ -53,6 +52,7 @@ export class Game {
 
       if (isCharacterReachedPit) {
         this.character.moveDown(pit.heightSize);
+        this.character.movingPlatforms.forEach((platform) => platform.moveDown(pit.heightSize));
       }
 
       const isCharacterCollidedPit = CollisionDetector.isCharacterCollidedPit(this.character, pit);

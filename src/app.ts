@@ -1,3 +1,7 @@
 import { Game } from "./app/components/game";
 
-const game = new Game();
+try {
+  const game = new Game();
+} catch (e) {
+  console.log(e);
+}
