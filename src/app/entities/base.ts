@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
-import { createSpriteFromImage } from "../components/utils";
 import { BASE_ENTITY_SIZE } from "../constants";
+import { createSpriteFromImage } from "../lib/utils";
 
 export interface EntityInterface {
   app: PIXI.Application<HTMLCanvasElement>;

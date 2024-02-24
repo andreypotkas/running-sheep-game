@@ -1,8 +1,8 @@
 import gsap from "gsap";
 import * as PIXI from "pixi.js";
 
-import { createSpriteFromImage } from "../components/utils";
 import { APP_HEIGHT, APP_WIDTH, BASE_ENTITY_SIZE } from "../constants";
+import { createSpriteFromImage } from "../lib/utils";
 
 export interface CloudConfig {
   imageId: number;

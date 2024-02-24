@@ -34,7 +34,7 @@ class AppConfiguration implements AppConfigurationInterface {
     if (this.isMobileDevice) {
       if (this.isLandscapeOrientation) {
         appWidth = window.innerWidth * 4;
-        appHeight = window.innerHeight;
+        appHeight = window.screen.height;
         baseEntitySize = 50;
         verticalMoveStep = 50;
         horizontalMoveStep = 2;

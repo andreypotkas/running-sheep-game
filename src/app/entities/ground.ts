@@ -1,7 +1,6 @@
 import * as PIXI from "pixi.js";
-import { createSpriteFromImage } from "../components/utils";
 import { APP_HEIGHT, APP_WIDTH, BASE_ENTITY_SIZE, GROUND_HEIGHT, GROUND_LEVEL } from "../constants";
-import { roundToCeilWithZeroLastDigit } from "../lib/utils";
+import { createSpriteFromImage, roundToCeilWithZeroLastDigit } from "../lib/utils";
 import { Box } from "./box";
 import { Pit } from "./pit";
 
