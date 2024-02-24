@@ -4,6 +4,7 @@ import { Character, CharacterInterface } from "../entities/character";
 import { Cloud } from "../entities/cloud";
 import { Ground, GroundInterface } from "../entities/ground";
 import { CollisionDetector } from "../lib/collisionDetector";
+import { createFullScreenButton, createStartButton } from "../ui/button";
 import { generateAppBackgroundElements, renderResetButton } from "./utils";
 
 export class Game {
@@ -30,11 +31,21 @@ export class Game {
     this.ground.addPitsAndBoxes();
     this.app.stage.addChild(this.character.sprite);
 
+    const startButton = createStartButton(this.app, this.runGame.bind(this));
+    const fullScreenButton = createFullScreenButton(this.app, this.toggleFullScreen.bind(this));
+    this.app.stage.addChild(startButton, fullScreenButton);
+
     window.addEventListener("resize", () => {
       window.location.reload();
     });
 
     document.body.appendChild(this.app.view);
+  }
+
+  public toggleFullScreen() {
+    document.addEventListener("click", () => {
+      this.app.view.requestFullscreen();
+    });
   }
 
   public runGame(): void {
