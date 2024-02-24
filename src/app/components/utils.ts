@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { appConfig } from "../appConfig";
+import { appConfig } from "../../app";
 import { Character } from "../entities/character";
 import { Cloud, CloudConfig } from "../entities/cloud";
 import { Ground } from "../entities/ground";

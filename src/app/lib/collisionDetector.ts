@@ -1,4 +1,4 @@
-import { appConfig } from "../appConfig";
+import { appConfig } from "../../app";
 import { BoxInterface } from "../entities/box";
 import { CharacterInterface } from "../entities/character";
 import { GroundInterface } from "../entities/ground";

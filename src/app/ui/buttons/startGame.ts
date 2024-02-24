@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { appConfig } from "../../appConfig";
+import { appConfig } from "../../../app";
 import { CustomButton } from "./base";
 
 export const startGameButton = (app: PIXI.Application<HTMLCanvasElement>, onClick: () => void) => {

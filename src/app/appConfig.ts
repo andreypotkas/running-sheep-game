@@ -10,6 +10,8 @@ export type AppConfigObject = {
   BASE_SIZE: number;
   VERTICAL_MOVE_STEP: number;
   HORIZONTAL_MOVE_STEP: number;
+  IS_FULLSCREEN: boolean;
+  SCALING_FACTOR: number;
 };
 
 export class AppConfiguration implements AppConfigurationInterface {
@@ -17,7 +19,9 @@ export class AppConfiguration implements AppConfigurationInterface {
   private isMobileDevice: boolean;
   private isLandscapeOrientation: boolean;
   private pixelRatio: number;
+  private isFullScreen: boolean = false;
   public constants: AppConfigObject;
+  public scalingFactor: number = window.screen.height / window.innerHeight;
 
   constructor() {
     this.userAgent = navigator.userAgent;
@@ -72,6 +76,8 @@ export class AppConfiguration implements AppConfigurationInterface {
       BASE_SIZE: baseSize,
       VERTICAL_MOVE_STEP: verticalMoveStep,
       HORIZONTAL_MOVE_STEP: horizontalMoveStep,
+      IS_FULLSCREEN: this.isFullScreen,
+      SCALING_FACTOR: this.scalingFactor,
     };
   }
 
@@ -92,5 +98,3 @@ export class AppConfiguration implements AppConfigurationInterface {
     };
   }
 }
-
-export const appConfig = new AppConfiguration();

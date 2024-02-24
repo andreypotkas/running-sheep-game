@@ -1,16 +1,17 @@
-import * as PIXI from "pixi.js";
-import { appConfig } from "../../appConfig";
+import { appConfig } from "../../../app";
 import { CustomButton } from "./base";
 
-export const restartGameButton = (app: PIXI.Application<HTMLCanvasElement>, onClick: () => void) => {
-  const centerX = app.stage.position.x + window.screen.width / 2;
-  const centerY = app.renderer.height / 2;
-  const width = appConfig.constants.BASE_SIZE * 4;
-  const height = appConfig.constants.BASE_SIZE;
-  const buttonX = centerX - width / 2;
-  const buttonY = centerY - height / 2;
+export const restartGameButton = (characterX: number, onClick: () => void) => {
+  const windowCenterX = characterX + window.innerWidth / 4;
+  const windowCenterY = window.innerHeight / 2;
 
-  const button = new CustomButton(width, height, { x: buttonX, y: buttonY }, onClick, false, "blue", "Restart game");
+  const buttonWidth = appConfig.constants.BASE_SIZE * 4;
+  const buttonHeight = appConfig.constants.BASE_SIZE;
+
+  const buttonX = windowCenterX - buttonWidth / 2;
+  const buttonY = windowCenterY - buttonHeight / 2;
+
+  const button = new CustomButton(buttonWidth, buttonHeight, { x: buttonX, y: buttonY }, onClick, false, "blue", "Restart game");
 
   return button;
 };

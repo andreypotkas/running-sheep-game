@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { appConfig } from "../appConfig";
+import { appConfig } from "../../app";
 import { createSpriteFromImage, roundToCeilWithZeroLastDigit } from "../lib/utils";
 import { Box } from "./box";
 import { Pit } from "./pit";

@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import { roundToCeilWithZeroLastDigit } from "../lib/utils";
 import { MovableEntity, MovableEntityInterface } from "./movable";
 import { Platform, PlatformInterface } from "./platform";
 
@@ -14,7 +15,7 @@ export class Character extends MovableEntity {
 
   constructor(app: PIXI.Application<HTMLCanvasElement>, x: number, y: number, widthCount: number, heightCount: number, resource: string) {
     super(app, x, y, widthCount, heightCount, resource);
-    this.x = 200;
+    this.x = roundToCeilWithZeroLastDigit(window.innerWidth / 10);
   }
 
   public get movingPlatforms() {

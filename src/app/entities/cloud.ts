@@ -1,7 +1,7 @@
 import gsap from "gsap";
 import * as PIXI from "pixi.js";
 
-import { appConfig } from "../appConfig";
+import { appConfig } from "../../app";
 import { createSpriteFromImage } from "../lib/utils";
 
 export interface CloudConfig {

@@ -1,4 +1,4 @@
-import { appConfig } from "../../appConfig";
+import { appConfig } from "../../../app";
 import { CustomButton } from "./base";
 
 export const toggleFullScreenButton = (onClick: () => void) => {

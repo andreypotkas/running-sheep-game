@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { appConfig } from "../appConfig";
+import { appConfig } from "../../app";
 import { toggleFullScreenButton } from "../ui/buttons/fullscreenToggler";
 
 export class TopBarContainer extends PIXI.Container {
