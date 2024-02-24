@@ -28,6 +28,11 @@ export class AppConfiguration implements AppConfigurationInterface {
   }
 
   initAppConstants() {
+    this.userAgent = navigator.userAgent;
+    this.isMobileDevice = this.detectMobileDevice();
+    this.isLandscapeOrientation = this.detectLandscapeOrientation();
+    this.pixelRatio = window.devicePixelRatio;
+
     let appWidth;
     let appHeight;
     let baseSize;
@@ -36,7 +41,7 @@ export class AppConfiguration implements AppConfigurationInterface {
 
     if (this.isMobileDevice) {
       if (this.isLandscapeOrientation) {
-        appWidth = window.innerWidth * 8;
+        appWidth = window.innerWidth * 6;
         appHeight = window.innerHeight;
         baseSize = 50;
         verticalMoveStep = 50;
@@ -51,7 +56,7 @@ export class AppConfiguration implements AppConfigurationInterface {
     } else {
       baseSize = 100;
       verticalMoveStep = 100;
-      appWidth = window.innerWidth * 6;
+      appWidth = window.innerWidth * 4;
       appHeight = window.innerHeight;
       horizontalMoveStep = 5;
     }

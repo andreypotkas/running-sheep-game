@@ -1,4 +1,4 @@
-import { GROUND_LEVEL } from "../constants";
+import { appConfig } from "../appConfig";
 import { BoxInterface } from "../entities/box";
 import { CharacterInterface } from "../entities/character";
 import { GroundInterface } from "../entities/ground";
@@ -18,7 +18,7 @@ export class CollisionDetector {
     return character.x === pit.x;
   }
   private isCharacterCollidedPit(character: CharacterInterface, pit: PitInterface): boolean {
-    return character.rightX === pit.rightX && character.estimatedBottomY > GROUND_LEVEL;
+    return character.rightX === pit.rightX && character.estimatedBottomY > appConfig.constants.GROUND_LEVEL;
   }
 
   private isCharacterReachedBox(character: CharacterInterface, box: BoxInterface): boolean {
@@ -32,7 +32,7 @@ export class CollisionDetector {
   }
 
   private isPlatformCollidedPit(platform: PlatformInterface, pit: PitInterface): boolean {
-    return platform.rightX === pit.rightX && platform.estimatedBottomY > GROUND_LEVEL;
+    return platform.rightX === pit.rightX && platform.estimatedBottomY > appConfig.constants.GROUND_LEVEL;
   }
   private isPlatformCollidedBox(platform: PlatformInterface, box: BoxInterface): boolean {
     return platform.rightX === box.x && platform.estimatedBottomY > box.y;

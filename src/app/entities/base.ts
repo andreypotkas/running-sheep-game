@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { BASE_SIZE } from "../constants";
+import { appConfig } from "../appConfig";
 import { createSpriteFromImage } from "../lib/utils";
 
 export interface EntityInterface {
@@ -28,8 +28,8 @@ export class Entity implements EntityInterface {
 
     this.widthSize = widthSize;
     this.heightSize = heightSize;
-    this.height = BASE_SIZE * heightSize;
-    this.width = BASE_SIZE * widthSize;
+    this.height = appConfig.constants.BASE_SIZE * heightSize;
+    this.width = appConfig.constants.BASE_SIZE * widthSize;
     this.sprite = createSpriteFromImage(resource, this.width, this.height, x, y);
   }
 

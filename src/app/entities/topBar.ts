@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { APP_WIDTH, BASE_SIZE, HORIZONTAL_MOVE_STEP } from "../constants";
+import { appConfig } from "../appConfig";
 import { toggleFullScreenButton } from "../ui/buttons/fullscreenToggler";
 
 export class TopBarContainer extends PIXI.Container {
@@ -7,7 +7,7 @@ export class TopBarContainer extends PIXI.Container {
   private progressWidth: number;
   private progressHeight: number;
   private progressColor: number | string = "yellow";
-  private progress: number;
+  private progress: number = 0;
   private scoreText: PIXI.Text;
   private characterIcon: PIXI.Sprite;
   private finishIcon: PIXI.Sprite;
@@ -15,9 +15,8 @@ export class TopBarContainer extends PIXI.Container {
   constructor(x: number, y: number, width: number, height: number, toggleFullScreenCallback: () => void) {
     super();
     this.position.set(x, y);
-    this.progressWidth = width - 4 * BASE_SIZE;
+    this.progressWidth = width - 4 * appConfig.constants.BASE_SIZE;
     this.progressHeight = height / 5;
-    this.progress = 0;
 
     this.progressBar = this.createProgressBar();
     this.scoreText = this.createScoreText();
@@ -37,7 +36,7 @@ export class TopBarContainer extends PIXI.Container {
   private createProgressBar(): PIXI.Graphics {
     const progressBar = new PIXI.Graphics();
     progressBar.beginFill(this.progressColor);
-    progressBar.drawRect(BASE_SIZE * 2, BASE_SIZE * 0.5, this.progressWidth, this.progressHeight);
+    progressBar.drawRect(appConfig.constants.BASE_SIZE * 2, appConfig.constants.BASE_SIZE * 0.5, this.progressWidth, this.progressHeight);
     progressBar.endFill();
     return progressBar;
   }
@@ -45,13 +44,13 @@ export class TopBarContainer extends PIXI.Container {
   private createScoreText(): PIXI.Text {
     const style = new PIXI.TextStyle({
       fontFamily: "Arial",
-      fontSize: BASE_SIZE * 0.75,
+      fontSize: appConfig.constants.BASE_SIZE * 0.75,
       fontWeight: "bold",
       fill: "white",
     });
 
     const scoreText = new PIXI.Text("0", style);
-    scoreText.position.set(BASE_SIZE * 0.2, BASE_SIZE * 0.15);
+    scoreText.position.set(appConfig.constants.BASE_SIZE * 0.2, appConfig.constants.BASE_SIZE * 0.15);
 
     return scoreText;
   }
@@ -59,27 +58,27 @@ export class TopBarContainer extends PIXI.Container {
   private createCharacterIcon(): PIXI.Sprite {
     const texture = PIXI.Texture.from("assets/img/character-icon.png");
     const characterIcon = new PIXI.Sprite(texture);
-    characterIcon.width = BASE_SIZE * 0.75;
-    characterIcon.height = BASE_SIZE * 0.75;
+    characterIcon.width = appConfig.constants.BASE_SIZE * 0.75;
+    characterIcon.height = appConfig.constants.BASE_SIZE * 0.75;
     characterIcon.anchor.set(0.5, 0.5);
-    characterIcon.position.set(BASE_SIZE * 2, this.progressHeight * 3);
+    characterIcon.position.set(appConfig.constants.BASE_SIZE * 2, this.progressHeight * 3);
     return characterIcon;
   }
 
   private createFinishIcon(): PIXI.Sprite {
     const texture = PIXI.Texture.from("assets/img/flag-icon.png"); // Путь к изображению финиша
     const finishIcon = new PIXI.Sprite(texture);
-    finishIcon.width = BASE_SIZE * 0.75;
-    finishIcon.height = BASE_SIZE * 0.75;
+    finishIcon.width = appConfig.constants.BASE_SIZE * 0.75;
+    finishIcon.height = appConfig.constants.BASE_SIZE * 0.75;
     finishIcon.anchor.set(0.5, 0.5);
-    finishIcon.position.set(BASE_SIZE * 2 + this.progressWidth, this.progressHeight * 3);
+    finishIcon.position.set(appConfig.constants.BASE_SIZE * 2 + this.progressWidth, this.progressHeight * 3);
     return finishIcon;
   }
 
   public updateProgress(progressX: number): void {
-    const finishPointX = APP_WIDTH - window.screen.width;
+    const finishPointX = appConfig.constants.APP_WIDTH - window.screen.width;
     const barLength = this.progressBar.width;
-    const startPadding = BASE_SIZE * 2;
+    const startPadding = appConfig.constants.BASE_SIZE * 2;
 
     this.characterIcon.x = (progressX / finishPointX) * barLength + startPadding;
   }
@@ -89,6 +88,6 @@ export class TopBarContainer extends PIXI.Container {
   }
 
   public moveForward() {
-    this.x += HORIZONTAL_MOVE_STEP;
+    this.x += appConfig.constants.HORIZONTAL_MOVE_STEP;
   }
 }

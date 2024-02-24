@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import * as PIXI from "pixi.js";
-import { HORIZONTAL_MOVE_STEP, VERTICAL_MOVE_STEP } from "../constants";
+import { appConfig } from "../appConfig";
 import { Entity, EntityInterface } from "./base";
 
 export interface MovableEntityInterface extends EntityInterface {
@@ -23,15 +23,15 @@ export class MovableEntity extends Entity implements MovableEntityInterface {
   }
 
   public moveUp(): void {
-    this.estimatedY = this.estimatedY - VERTICAL_MOVE_STEP;
+    this.estimatedY = this.estimatedY - appConfig.constants.VERTICAL_MOVE_STEP;
   }
 
   public moveForward() {
-    this.x += HORIZONTAL_MOVE_STEP;
+    this.x += appConfig.constants.HORIZONTAL_MOVE_STEP;
     gsap.to(this.sprite, { duration: 0.2, y: this.estimatedY });
   }
 
   public moveDown(steps: number) {
-    this.estimatedY = this.estimatedY + VERTICAL_MOVE_STEP * steps;
+    this.estimatedY = this.estimatedY + appConfig.constants.VERTICAL_MOVE_STEP * steps;
   }
 }

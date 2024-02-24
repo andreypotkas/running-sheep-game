@@ -29,17 +29,17 @@ export class Game {
     this.app.stage.addChild(character.sprite);
 
     const startButton = startGameButton(this.app, this.runGame.bind(this));
-    // const fullScreenButton = createFullScreenButton(this.app, this.toggleFullScreen.bind(this));
     this.app.stage.addChild(startButton);
 
     window.addEventListener("resize", () => {
       appConfig.constants = appConfig.initAppConstants();
-      console.log(appConfig.constants);
+
+      console.log(appConfig.constants.APP_WIDTH, appConfig.constants.APP_HEIGHT);
 
       if (this.isFullScreen) {
-        this.app.renderer.resize(appConfig.constants.APP_WIDTH, window.innerHeight);
-      } else {
         this.app.renderer.resize(appConfig.constants.APP_WIDTH, window.screen.height);
+      } else {
+        this.app.renderer.resize(appConfig.constants.APP_WIDTH, window.innerHeight);
       }
       app.render();
     });

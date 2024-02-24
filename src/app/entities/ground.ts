@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { APP_HEIGHT, APP_WIDTH, BASE_SIZE, GROUND_HEIGHT, GROUND_LEVEL } from "../constants";
+import { appConfig } from "../appConfig";
 import { createSpriteFromImage, roundToCeilWithZeroLastDigit } from "../lib/utils";
 import { Box } from "./box";
 import { Pit } from "./pit";
@@ -35,15 +35,21 @@ export class Ground implements GroundInterface {
 
   constructor(app: PIXI.Application<HTMLCanvasElement>) {
     this.app = app;
-    this.sprite = createSpriteFromImage("assets/img/ground.png", APP_WIDTH, GROUND_HEIGHT, 0, APP_HEIGHT - GROUND_HEIGHT);
+    this.sprite = createSpriteFromImage(
+      "assets/img/ground.png",
+      appConfig.constants.APP_WIDTH,
+      appConfig.constants.GROUND_HEIGHT,
+      0,
+      appConfig.constants.APP_HEIGHT - appConfig.constants.GROUND_HEIGHT
+    );
   }
 
   public addPitsAndBoxes(): void {
-    const spaceBetweenObstacles = APP_WIDTH / ((groundBoxSizes.length + groundPitSizes.length) * 2);
+    const spaceBetweenObstacles = appConfig.constants.APP_WIDTH / ((groundBoxSizes.length + groundPitSizes.length) * 2);
 
     groundPitSizes.forEach((item, index) => {
       const pitX = roundToCeilWithZeroLastDigit(window.innerWidth + index * spaceBetweenObstacles * 2);
-      const pitY = APP_HEIGHT - GROUND_HEIGHT;
+      const pitY = appConfig.constants.APP_HEIGHT - appConfig.constants.GROUND_HEIGHT;
       const pit = new Pit(this.app, pitX, pitY, item.w, item.h, "assets/img/pit.jpg");
       this.pits.push(pit);
       this.app.stage.addChild(pit.sprite);
@@ -51,7 +57,7 @@ export class Ground implements GroundInterface {
 
     groundBoxSizes.forEach((item, index) => {
       const boxX = roundToCeilWithZeroLastDigit(window.innerWidth + index * spaceBetweenObstacles * 2 + spaceBetweenObstacles);
-      const boxY = GROUND_LEVEL - BASE_SIZE * item.h;
+      const boxY = appConfig.constants.GROUND_LEVEL - appConfig.constants.BASE_SIZE * item.h;
       const box = new Box(this.app, boxX, boxY, item.w, item.h, "assets/img/box.png");
       this.boxes.push(box);
       this.app.stage.addChild(box.sprite);
