@@ -33,7 +33,7 @@ const cloudsData = [
 
 export function initCommonAppElements(toggleFullScreenCallback: () => void) {
   const app = new PIXI.Application<HTMLCanvasElement>({ width: APP_WIDTH, height: APP_HEIGHT, resizeTo: window });
-  const topBar = new TopBarContainer(0, 0, window.innerWidth, 2 * BASE_SIZE, toggleFullScreenCallback);
+  const topBar = new TopBarContainer(0, 0, window.innerWidth, BASE_SIZE, toggleFullScreenCallback);
   const character = new Character(app, 0, APP_HEIGHT - GROUND_HEIGHT - BASE_SIZE, 1, 1, "assets/img/character.png");
   const ground = new Ground(app);
   const clouds: PIXI.Sprite[] = cloudsData.map((item: CloudConfig, index) => {

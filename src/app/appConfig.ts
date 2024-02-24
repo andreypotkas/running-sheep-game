@@ -12,16 +12,19 @@ export type AppConfigObject = {
   HORIZONTAL_MOVE_STEP: number;
 };
 
-class AppConfiguration implements AppConfigurationInterface {
+export class AppConfiguration implements AppConfigurationInterface {
   private userAgent: string;
   private isMobileDevice: boolean;
   private isLandscapeOrientation: boolean;
   private pixelRatio: number;
+  public constants: AppConfigObject;
+
   constructor() {
     this.userAgent = navigator.userAgent;
     this.isMobileDevice = this.detectMobileDevice();
     this.isLandscapeOrientation = this.detectLandscapeOrientation();
     this.pixelRatio = window.devicePixelRatio;
+    this.constants = this.initAppConstants();
   }
 
   initAppConstants() {
@@ -53,7 +56,7 @@ class AppConfiguration implements AppConfigurationInterface {
       horizontalMoveStep = 5;
     }
 
-    const groundHeight = Math.ceil(appHeight / 3);
+    const groundHeight = 2.5 * baseSize;
     const groundLevel = appHeight - groundHeight;
 
     return {

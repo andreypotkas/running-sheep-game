@@ -31,13 +31,13 @@ export class TopBarContainer extends PIXI.Container {
 
   public update(characterPosX: number) {
     this.updateProgress(characterPosX);
-    this.updateScore(characterPosX - 200);
+    this.updateScore(Math.ceil((characterPosX - 200) / 10));
   }
 
   private createProgressBar(): PIXI.Graphics {
     const progressBar = new PIXI.Graphics();
     progressBar.beginFill(this.progressColor);
-    progressBar.drawRect(BASE_SIZE * 2, BASE_SIZE, this.progressWidth, this.progressHeight);
+    progressBar.drawRect(BASE_SIZE * 2, BASE_SIZE * 0.5, this.progressWidth, this.progressHeight);
     progressBar.endFill();
     return progressBar;
   }
@@ -59,6 +59,8 @@ export class TopBarContainer extends PIXI.Container {
   private createCharacterIcon(): PIXI.Sprite {
     const texture = PIXI.Texture.from("assets/img/character-icon.png");
     const characterIcon = new PIXI.Sprite(texture);
+    characterIcon.width = BASE_SIZE * 0.75;
+    characterIcon.height = BASE_SIZE * 0.75;
     characterIcon.anchor.set(0.5, 0.5);
     characterIcon.position.set(BASE_SIZE * 2, this.progressHeight * 3);
     return characterIcon;
@@ -67,6 +69,8 @@ export class TopBarContainer extends PIXI.Container {
   private createFinishIcon(): PIXI.Sprite {
     const texture = PIXI.Texture.from("assets/img/flag-icon.png"); // Путь к изображению финиша
     const finishIcon = new PIXI.Sprite(texture);
+    finishIcon.width = BASE_SIZE * 0.75;
+    finishIcon.height = BASE_SIZE * 0.75;
     finishIcon.anchor.set(0.5, 0.5);
     finishIcon.position.set(BASE_SIZE * 2 + this.progressWidth, this.progressHeight * 3);
     return finishIcon;

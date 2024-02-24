@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { AppConfigObject, appConfig } from "../appConfig";
+import { appConfig } from "../appConfig";
 import { CharacterInterface } from "../entities/character";
 import { GroundInterface } from "../entities/ground";
 import { TopBarContainer } from "../entities/topBar";
@@ -14,11 +14,9 @@ export class Game {
   public readonly character: CharacterInterface;
   public readonly collisionDetector: CollisionDetector;
   public readonly topBar: TopBarContainer;
-  public config: AppConfigObject;
   private isFullScreen: boolean = false;
 
   constructor() {
-    this.config = appConfig.initAppConstants();
     const { app, background, mountains, clouds, character, ground, topBar } = initCommonAppElements(this.toggleFullScreen.bind(this));
     this.app = app;
     this.ground = ground;
@@ -35,11 +33,15 @@ export class Game {
     this.app.stage.addChild(startButton);
 
     window.addEventListener("resize", () => {
+      appConfig.constants = appConfig.initAppConstants();
+      console.log(appConfig.constants);
+
       if (this.isFullScreen) {
-        this.app.renderer.resize(this.config.APP_WIDTH, window.innerHeight);
+        this.app.renderer.resize(appConfig.constants.APP_WIDTH, window.innerHeight);
       } else {
-        this.app.renderer.resize(this.config.APP_WIDTH, window.screen.height);
+        this.app.renderer.resize(appConfig.constants.APP_WIDTH, window.screen.height);
       }
+      app.render();
     });
 
     document.body.appendChild(this.app.view);
@@ -86,11 +88,11 @@ export class Game {
   }
 
   private moveStage() {
-    this.app.stage.position.x -= this.config.HORIZONTAL_MOVE_STEP;
+    this.app.stage.position.x -= appConfig.constants.HORIZONTAL_MOVE_STEP;
   }
 
   private checkIsCharacterFinished() {
-    const finish = this.config.APP_WIDTH - window.screen.width;
+    const finish = appConfig.constants.APP_WIDTH - window.screen.width;
     const isFinished = this.character.rightX >= finish;
     if (isFinished) this.endGame();
   }
