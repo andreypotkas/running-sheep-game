@@ -19,16 +19,17 @@ export class Game {
     this.character = character;
     this.collisionDetector = new CollisionDetector(this.ground, this.character, this.endGame.bind(this));
 
-    this.app.stage.addChild(background, ...mountains, this.ground.sprite, ...clouds, character.sprite);
+    this.app.stage.addChild(background, ...mountains, this.ground.sprite, ...clouds);
     this.ground.addPitsAndBoxes();
+    this.app.stage.addChild(character.sprite);
 
     const startButton = createStartButton(this.app, this.runGame.bind(this));
     const fullScreenButton = createFullScreenButton(this.app, this.toggleFullScreen.bind(this));
     this.app.stage.addChild(startButton, fullScreenButton);
 
     window.addEventListener("resize", () => {
-      this.app.renderer.resize(APP_WIDTH, window.screen.height);
-      this.app.view.style.height = window.screen.height + "px";
+      // this.app.renderer.resize(window.screen.width, window.screen.height);
+      // this.app.view.style.height = window.screen.height + "px";
     });
 
     document.body.appendChild(this.app.view);

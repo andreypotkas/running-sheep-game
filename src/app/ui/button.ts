@@ -3,16 +3,16 @@ import { Graphics, Sprite, Text, TextStyle, Texture } from "pixi.js";
 import { BASE_ENTITY_SIZE } from "../constants";
 
 export class CustomButton extends Graphics {
-  buttonColor = 0x3366ff;
   color = 0x3366ff;
   borderWidth = 3;
   borderRadius = 10;
   buttonWidth: number;
   buttonHeight: number;
+  buttonColor: string;
 
-  constructor(buttonWidth: number, buttonHeight: number, position: { x: number; y: number }, onClick: () => void, isHideOnClick: boolean, text?: string, image?: string) {
+  constructor(buttonWidth: number, buttonHeight: number, position: { x: number; y: number }, onClick: () => void, isHideOnClick: boolean, buttonColor: string, text?: string, image?: string) {
     super();
-
+    this.buttonColor = buttonColor;
     this.buttonWidth = buttonWidth;
     this.buttonHeight = buttonHeight;
     this.position.set(position.x, position.y);
@@ -81,33 +81,31 @@ export const createStartButton = (app: PIXI.Application<HTMLCanvasElement>, onCl
   const buttonX = centerX - width / 2;
   const buttonY = centerY - height / 2;
 
-  const button = new CustomButton(width, height, { x: buttonX, y: buttonY }, onClick, false, "Start game");
+  const button = new CustomButton(width, height, { x: buttonX, y: buttonY }, onClick, false, "blue", "Start game");
 
   return button;
 };
 
 export const createFullScreenButton = (app: PIXI.Application<HTMLCanvasElement>, onClick: () => void) => {
-  const centerX = app.renderer.width / 2;
-  const centerY = app.renderer.height / 1.5;
-  const width = BASE_ENTITY_SIZE * 2;
+  const x = app.renderer.width - BASE_ENTITY_SIZE * 1.2;
+  const y = BASE_ENTITY_SIZE * 0.2;
+  const width = BASE_ENTITY_SIZE;
   const height = BASE_ENTITY_SIZE;
-  const buttonX = centerX - width / 2;
-  const buttonY = centerY - height / 2;
 
-  const button = new CustomButton(width, height, { x: buttonX, y: buttonY }, onClick, true, "Full");
+  const button = new CustomButton(width, height, { x: x, y: y }, onClick, true, "transparent", "", "assets/img/fullscreen.png");
 
   return button;
 };
 
 export const createRestartButton = (app: PIXI.Application<HTMLCanvasElement>, onClick: () => void) => {
-  const centerX = app.renderer.width / 2;
+  const centerX = app.stage.position.x + window.screen.width / 2;
   const centerY = app.renderer.height / 2;
   const width = BASE_ENTITY_SIZE * 4;
   const height = BASE_ENTITY_SIZE;
   const buttonX = centerX - width / 2;
   const buttonY = centerY - height / 2;
 
-  const button = new CustomButton(width, height, { x: buttonX, y: buttonY }, onClick, false, "Restart game");
+  const button = new CustomButton(width, height, { x: buttonX, y: buttonY }, onClick, false, "blue", "Restart game");
 
   return button;
 };
