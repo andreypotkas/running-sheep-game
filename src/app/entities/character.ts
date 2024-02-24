@@ -1,13 +1,11 @@
 import * as PIXI from "pixi.js";
-import { APP_WIDTH } from "../constants";
 import { MovableEntity, MovableEntityInterface } from "./movable";
 import { Platform, PlatformInterface } from "./platform";
 
 export interface CharacterInterface extends MovableEntityInterface {
   platforms: PlatformInterface[];
   movingPlatforms: PlatformInterface[];
-  isFinishReached: () => boolean;
-  update: (callback: () => void) => void;
+  update(): void;
   handleStartGame(): void;
 }
 
@@ -23,19 +21,14 @@ export class Character extends MovableEntity {
     return this.platforms.filter((platform) => platform.isMoving);
   }
 
-  public update(callback: () => void) {
+  public update() {
     this.moveForward();
     this.movingPlatforms.forEach((platform: PlatformInterface) => platform.moveForward());
-    if (this.isFinishReached()) callback();
-  }
-
-  public isFinishReached() {
-    return !!(this.x >= APP_WIDTH - 200);
   }
 
   public handleStartGame() {
-    window.addEventListener("keydown", (e) => this.handleKeyDown(e));
-    window.addEventListener("touchstart", (e) => this.handleTouch(e));
+    window.addEventListener("keydown", (e) => this.handleInteraction(e));
+    window.addEventListener("touchstart", (e) => this.handleInteraction(e));
   }
 
   private addPlatform() {
@@ -44,12 +37,9 @@ export class Character extends MovableEntity {
     this.platforms.push(platform);
   }
 
-  private handleKeyDown(e: KeyboardEvent) {
-    this.moveUp();
-    this.addPlatform();
-  }
+  private handleInteraction(e: KeyboardEvent | TouchEvent) {
+    if (this.movingPlatforms.length > 3) return;
 
-  private handleTouch(e: TouchEvent) {
     this.moveUp();
     this.addPlatform();
   }

@@ -1,7 +1,7 @@
 import gsap from "gsap";
 import * as PIXI from "pixi.js";
 
-import { APP_HEIGHT, APP_WIDTH, BASE_ENTITY_SIZE } from "../constants";
+import { APP_HEIGHT, APP_WIDTH, BASE_SIZE } from "../constants";
 import { createSpriteFromImage } from "../lib/utils";
 
 export interface CloudConfig {
@@ -14,10 +14,10 @@ export class Cloud {
   posX: number;
   public readonly sprite: PIXI.Sprite;
   constructor(config: CloudConfig, index: number) {
-    const cloudHeight = BASE_ENTITY_SIZE * config.height;
-    const cloudWidth = BASE_ENTITY_SIZE * config.width;
+    const cloudHeight = BASE_SIZE * config.height;
+    const cloudWidth = BASE_SIZE * config.width;
     const posY = (Math.random() * APP_HEIGHT) / 3;
-    this.posX = BASE_ENTITY_SIZE * 10 + index * 5 * BASE_ENTITY_SIZE;
+    this.posX = BASE_SIZE * 10 + index * 5 * BASE_SIZE;
 
     this.sprite = createSpriteFromImage(`assets/img/clouds/${config.imageId}.png`, cloudWidth, cloudHeight, this.posX, posY);
     const initialDuration = (this.posX / APP_WIDTH) * 100;

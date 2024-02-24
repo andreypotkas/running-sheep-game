@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { APP_HEIGHT, APP_WIDTH, BASE_ENTITY_SIZE, GROUND_HEIGHT, GROUND_LEVEL } from "../constants";
+import { APP_HEIGHT, APP_WIDTH, BASE_SIZE, GROUND_HEIGHT, GROUND_LEVEL } from "../constants";
 import { createSpriteFromImage, roundToCeilWithZeroLastDigit } from "../lib/utils";
 import { Box } from "./box";
 import { Pit } from "./pit";
@@ -15,9 +15,12 @@ const groundPitSizes = [
   { w: 2, h: 2 },
   { w: 2, h: 2 },
   { w: 2, h: 2 },
+  { w: 2, h: 2 },
 ];
 
 const groundBoxSizes = [
+  { w: 1, h: 2 },
+  { w: 1, h: 1 },
   { w: 1, h: 2 },
   { w: 1, h: 1 },
   { w: 1, h: 2 },
@@ -39,8 +42,7 @@ export class Ground implements GroundInterface {
     const spaceBetweenObstacles = APP_WIDTH / ((groundBoxSizes.length + groundPitSizes.length) * 2);
 
     groundPitSizes.forEach((item, index) => {
-      const i = index + 1;
-      const pitX = roundToCeilWithZeroLastDigit(i * spaceBetweenObstacles * 2);
+      const pitX = roundToCeilWithZeroLastDigit(window.innerWidth + index * spaceBetweenObstacles * 2);
       const pitY = APP_HEIGHT - GROUND_HEIGHT;
       const pit = new Pit(this.app, pitX, pitY, item.w, item.h, "assets/img/pit.jpg");
       this.pits.push(pit);
@@ -48,10 +50,8 @@ export class Ground implements GroundInterface {
     });
 
     groundBoxSizes.forEach((item, index) => {
-      const i = index + 1;
-
-      const boxX = roundToCeilWithZeroLastDigit(i * spaceBetweenObstacles * 2 + spaceBetweenObstacles);
-      const boxY = GROUND_LEVEL - BASE_ENTITY_SIZE * item.h;
+      const boxX = roundToCeilWithZeroLastDigit(window.innerWidth + index * spaceBetweenObstacles * 2 + spaceBetweenObstacles);
+      const boxY = GROUND_LEVEL - BASE_SIZE * item.h;
       const box = new Box(this.app, boxX, boxY, item.w, item.h, "assets/img/box.png");
       this.boxes.push(box);
       this.app.stage.addChild(box.sprite);

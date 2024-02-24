@@ -1,13 +1,13 @@
 interface AppConfigurationInterface {
-  initAppConstants(): ConstantsObject;
+  initAppConstants(): AppConfigObject;
 }
 
-type ConstantsObject = {
+export type AppConfigObject = {
   APP_WIDTH: number;
   APP_HEIGHT: number;
   GROUND_HEIGHT: number;
   GROUND_LEVEL: number;
-  BASE_ENTITY_SIZE: number;
+  BASE_SIZE: number;
   VERTICAL_MOVE_STEP: number;
   HORIZONTAL_MOVE_STEP: number;
 };
@@ -27,28 +27,28 @@ class AppConfiguration implements AppConfigurationInterface {
   initAppConstants() {
     let appWidth;
     let appHeight;
-    let baseEntitySize;
+    let baseSize;
     let verticalMoveStep;
     let horizontalMoveStep;
 
     if (this.isMobileDevice) {
       if (this.isLandscapeOrientation) {
-        appWidth = window.innerWidth * 4;
-        appHeight = window.screen.height;
-        baseEntitySize = 50;
+        appWidth = window.innerWidth * 8;
+        appHeight = window.innerHeight;
+        baseSize = 50;
         verticalMoveStep = 50;
         horizontalMoveStep = 2;
       } else {
-        appWidth = window.innerWidth * 7;
+        appWidth = window.innerWidth * 10;
         appHeight = window.innerHeight;
-        baseEntitySize = 50;
+        baseSize = 50;
         verticalMoveStep = 50;
         horizontalMoveStep = 2;
       }
     } else {
-      baseEntitySize = 100;
+      baseSize = 100;
       verticalMoveStep = 100;
-      appWidth = window.innerWidth * 4;
+      appWidth = window.innerWidth * 6;
       appHeight = window.innerHeight;
       horizontalMoveStep = 5;
     }
@@ -61,7 +61,7 @@ class AppConfiguration implements AppConfigurationInterface {
       APP_HEIGHT: appHeight,
       GROUND_HEIGHT: groundHeight,
       GROUND_LEVEL: groundLevel,
-      BASE_ENTITY_SIZE: baseEntitySize,
+      BASE_SIZE: baseSize,
       VERTICAL_MOVE_STEP: verticalMoveStep,
       HORIZONTAL_MOVE_STEP: horizontalMoveStep,
     };
