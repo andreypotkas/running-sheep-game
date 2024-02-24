@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
-import { APP_HEIGHT, APP_WIDTH, BASE_ENTITY_SIZE } from "../constants";
+import { APP_HEIGHT, APP_WIDTH } from "../constants";
+import { Cloud, CloudConfig } from "../entities/cloud";
 
 export function renderResetButton(positionX: number) {
   const restartButton = new PIXI.Text("Restart", { fontSize: 48, fill: "yellow", fontWeight: "bold" });
@@ -61,12 +62,9 @@ export function generateAppBackgroundElements() {
     createSpriteFromImage("assets/img/mountain.png", APP_WIDTH / 4, APP_HEIGHT / 2, APP_WIDTH * 0.75, 100),
   ];
 
-  const clouds = cloudsData.map((item, index) => {
-    const cloadHeight = BASE_ENTITY_SIZE * item.height;
-    const cloadWidth = BASE_ENTITY_SIZE * item.width;
-    const posX = BASE_ENTITY_SIZE * 10 + index * 5 * BASE_ENTITY_SIZE;
-    const posY = (Math.random() * APP_HEIGHT) / 3;
-    return createSpriteFromImage(`assets/img/clouds/${item.imageId}.png`, cloadWidth, cloadHeight, posX, posY);
+  // Usage:
+  const clouds: Cloud[] = cloudsData.map((item: CloudConfig, index) => {
+    return new Cloud(item, index);
   });
 
   return { background, mountains, clouds };

@@ -8,6 +8,7 @@ export interface CharacterInterface extends MovableEntityInterface {
   movingPlatforms: PlatformInterface[];
   isFinishReached: () => boolean;
   update: (callback: () => void) => void;
+  handleStartGame(): void;
 }
 
 export class Character extends MovableEntity {
@@ -15,9 +16,7 @@ export class Character extends MovableEntity {
 
   constructor(app: PIXI.Application<HTMLCanvasElement>, x: number, y: number, widthCount: number, heightCount: number, resource: string) {
     super(app, x, y, widthCount, heightCount, resource);
-
-    window.addEventListener("keydown", (e) => this.handleKeyDown(e));
-    window.addEventListener("touchstart", (e) => this.handleTouch(e));
+    this.x = 200;
   }
 
   public get movingPlatforms() {
@@ -34,6 +33,11 @@ export class Character extends MovableEntity {
     return !!(this.x >= APP_WIDTH - 200);
   }
 
+  public handleStartGame() {
+    window.addEventListener("keydown", (e) => this.handleKeyDown(e));
+    window.addEventListener("touchstart", (e) => this.handleTouch(e));
+  }
+
   private addPlatform() {
     const platform = new Platform(this.app, this.x, this.estimatedBottomY, 1, 1, "assets/img/platform.png");
     this.app.stage.addChild(platform.sprite);
@@ -41,10 +45,8 @@ export class Character extends MovableEntity {
   }
 
   private handleKeyDown(e: KeyboardEvent) {
-    if (e.code === "Space") {
-      this.moveUp();
-      this.addPlatform();
-    }
+    this.moveUp();
+    this.addPlatform();
   }
 
   private handleTouch(e: TouchEvent) {
