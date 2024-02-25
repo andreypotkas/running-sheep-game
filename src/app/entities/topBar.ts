@@ -76,7 +76,7 @@ export class TopBarContainer extends PIXI.Container {
   }
 
   public updateProgress(progressX: number): void {
-    const finishPointX = appConfig.constants.APP_WIDTH - window.screen.width;
+    const finishPointX = appConfig.constants.GAME_WIDTH - window.screen.width;
     const barLength = this.progressBar.width;
     const startPadding = appConfig.constants.BASE_SIZE * 2;
 

@@ -8,7 +8,7 @@ export interface PlatformInterface extends MovableEntityInterface {
 
 export class Platform extends MovableEntity {
   isMoving: boolean;
-  constructor(app: PIXI.Application<HTMLCanvasElement>, x: number, y: number, widthCount: number, heightCount: number, resource: string) {
+  constructor(app: PIXI.Container, x: number, y: number, widthCount: number, heightCount: number, resource: string) {
     super(app, x, y, widthCount, heightCount, resource);
     this.isMoving = true;
   }

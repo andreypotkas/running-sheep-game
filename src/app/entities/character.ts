@@ -12,9 +12,11 @@ export interface CharacterInterface extends MovableEntityInterface {
 
 export class Character extends MovableEntity {
   public platforms: PlatformInterface[] = [];
+  private container: PIXI.Container;
 
-  constructor(app: PIXI.Application<HTMLCanvasElement>, x: number, y: number, widthCount: number, heightCount: number, resource: string) {
-    super(app, x, y, widthCount, heightCount, resource);
+  constructor(container: PIXI.Container, x: number, y: number, widthCount: number, heightCount: number, resource: string) {
+    super(container, x, y, widthCount, heightCount, resource);
+    this.container = container;
     this.x = roundToCeilWithZeroLastDigit(window.innerWidth / 10);
   }
 
@@ -33,8 +35,8 @@ export class Character extends MovableEntity {
   }
 
   private addPlatform() {
-    const platform = new Platform(this.app, this.x, this.estimatedBottomY, 1, 1, "assets/img/platform.png");
-    this.app.stage.addChild(platform.sprite);
+    const platform = new Platform(this.container, this.x, this.estimatedBottomY, 1, 1, "assets/img/platform.png");
+    this.container.addChild(platform.sprite);
     this.platforms.push(platform);
   }
 

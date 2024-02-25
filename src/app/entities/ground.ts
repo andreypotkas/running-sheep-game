@@ -28,33 +28,33 @@ const groundBoxSizes = [
 ];
 
 export class Ground implements GroundInterface {
-  private readonly app: PIXI.Application<HTMLCanvasElement>;
+  private readonly container: PIXI.Container;
   private readonly pits: Pit[] = [];
   private readonly boxes: Box[] = [];
   public readonly sprite: PIXI.Sprite;
 
-  constructor(app: PIXI.Application<HTMLCanvasElement>) {
-    this.app = app;
-    this.sprite = createSpriteFromImage("assets/img/ground.png", appConfig.constants.APP_WIDTH, appConfig.constants.GROUND_HEIGHT, 0, appConfig.constants.GROUND_LEVEL);
+  constructor(container: PIXI.Container) {
+    this.container = container;
+    this.sprite = createSpriteFromImage("assets/img/ground.png", appConfig.constants.GAME_WIDTH, appConfig.constants.GROUND_HEIGHT, 0, appConfig.constants.GROUND_LEVEL);
   }
 
   public addPitsAndBoxes(): void {
-    const spaceBetweenObstacles = appConfig.constants.APP_WIDTH / ((groundBoxSizes.length + groundPitSizes.length) * 2);
+    const spaceBetweenObstacles = appConfig.constants.GAME_WIDTH / ((groundBoxSizes.length + groundPitSizes.length) * 2);
 
     groundPitSizes.forEach((item, index) => {
       const pitX = roundToCeilWithZeroLastDigit(window.innerWidth + index * spaceBetweenObstacles * 2);
       const pitY = appConfig.constants.APP_HEIGHT - appConfig.constants.GROUND_HEIGHT;
-      const pit = new Pit(this.app, pitX, pitY, item.w, item.h, "assets/img/pit.jpg");
+      const pit = new Pit(this.container, pitX, pitY, item.w, item.h, "assets/img/pit.jpg");
       this.pits.push(pit);
-      this.app.stage.addChild(pit.sprite);
+      this.container.addChild(pit.sprite);
     });
 
     groundBoxSizes.forEach((item, index) => {
       const boxX = roundToCeilWithZeroLastDigit(window.innerWidth + index * spaceBetweenObstacles * 2 + spaceBetweenObstacles);
       const boxY = appConfig.constants.GROUND_LEVEL - appConfig.constants.BASE_SIZE * item.h;
-      const box = new Box(this.app, boxX, boxY, item.w, item.h, "assets/img/box.png");
+      const box = new Box(this.container, boxX, boxY, item.w, item.h, "assets/img/box.png");
       this.boxes.push(box);
-      this.app.stage.addChild(box.sprite);
+      this.container.addChild(box.sprite);
     });
   }
 

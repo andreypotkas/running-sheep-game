@@ -4,7 +4,7 @@ import { Entity, EntityInterface } from "./base";
 export interface BoxInterface extends EntityInterface {}
 
 export class Box extends Entity {
-  constructor(app: PIXI.Application<HTMLCanvasElement>, x: number, y: number, widthCount: number, heightCount: number, resource: string) {
+  constructor(app: PIXI.Container, x: number, y: number, widthCount: number, heightCount: number, resource: string) {
     super(app, x, y, widthCount, heightCount, resource);
   }
 }

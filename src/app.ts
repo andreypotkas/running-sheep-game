@@ -1,6 +1,6 @@
 import { AppConfiguration } from "./app/appConfig";
-import { Game } from "./app/components/game";
+import { GameApp } from "./app/components/app";
 
 export const appConfig = new AppConfiguration();
 
-const game = new Game();
+const game = new GameApp();

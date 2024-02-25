@@ -4,6 +4,7 @@ interface AppConfigurationInterface {
 
 export type AppConfigObject = {
   APP_WIDTH: number;
+  GAME_WIDTH: number;
   APP_HEIGHT: number;
   GROUND_HEIGHT: number;
   GROUND_LEVEL: number;
@@ -37,7 +38,7 @@ export class AppConfiguration implements AppConfigurationInterface {
     this.isLandscapeOrientation = this.detectLandscapeOrientation();
     this.pixelRatio = window.devicePixelRatio;
 
-    let appWidth;
+    let gameWidth;
     let appHeight;
     let baseSize;
     let verticalMoveStep;
@@ -45,13 +46,13 @@ export class AppConfiguration implements AppConfigurationInterface {
 
     if (this.isMobileDevice) {
       if (this.isLandscapeOrientation) {
-        appWidth = window.innerWidth * 6;
+        gameWidth = window.innerWidth * 6;
         appHeight = window.innerHeight;
         baseSize = 40;
         verticalMoveStep = 40;
         horizontalMoveStep = 2;
       } else {
-        appWidth = window.innerWidth * 10;
+        gameWidth = window.innerWidth * 10;
         appHeight = window.innerHeight;
         baseSize = 50;
         verticalMoveStep = 50;
@@ -60,16 +61,18 @@ export class AppConfiguration implements AppConfigurationInterface {
     } else {
       baseSize = 100;
       verticalMoveStep = 100;
-      appWidth = window.innerWidth * 6;
+      gameWidth = window.innerWidth * 6;
       appHeight = window.innerHeight;
       horizontalMoveStep = 15;
     }
 
     const groundHeight = 2.5 * baseSize;
     const groundLevel = appHeight - groundHeight;
+    const appWidth = window.innerWidth;
 
     return {
       APP_WIDTH: appWidth,
+      GAME_WIDTH: gameWidth,
       APP_HEIGHT: appHeight,
       GROUND_HEIGHT: groundHeight,
       GROUND_LEVEL: groundLevel,

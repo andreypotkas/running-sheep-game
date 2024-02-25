@@ -13,7 +13,7 @@ export interface MovableEntityInterface extends EntityInterface {
 
 export class MovableEntity extends Entity implements MovableEntityInterface {
   public estimatedY: number;
-  constructor(app: PIXI.Application<HTMLCanvasElement>, x: number, y: number, widthCount: number, heightCount: number, resource: string) {
+  constructor(app: PIXI.Container, x: number, y: number, widthCount: number, heightCount: number, resource: string) {
     super(app, x, y, widthCount, heightCount, resource);
     this.estimatedY = y;
   }

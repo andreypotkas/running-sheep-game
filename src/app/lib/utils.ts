@@ -19,3 +19,13 @@ export function createSpriteFromImage(image: string, width: number, height: numb
 
   return sprite;
 }
+
+export function createText(content: string, fontSize: number, color: string, x: number, y: number) {
+  const style = new PIXI.TextStyle({
+    fill: color,
+    fontSize,
+  });
+  const text = new PIXI.Text(content, style);
+  text.position.set(x - text.width / 2, y);
+  return text;
+}

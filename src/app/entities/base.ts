@@ -3,7 +3,7 @@ import { appConfig } from "../../app";
 import { createSpriteFromImage } from "../lib/utils";
 
 export interface EntityInterface {
-  app: PIXI.Application<HTMLCanvasElement>;
+  app: PIXI.Container;
   sprite: PIXI.Sprite;
   x: number;
   rightX: number;
@@ -16,14 +16,14 @@ export interface EntityInterface {
 }
 
 export class Entity implements EntityInterface {
-  public readonly app: PIXI.Application<HTMLCanvasElement>;
+  public readonly app: PIXI.Container;
   public readonly sprite: PIXI.Sprite;
   public readonly width: number;
   public readonly height: number;
   public readonly widthSize: number;
   public readonly heightSize: number;
 
-  constructor(app: PIXI.Application<HTMLCanvasElement>, x: number, y: number, widthSize: number, heightSize: number, resource: string) {
+  constructor(app: PIXI.Container, x: number, y: number, widthSize: number, heightSize: number, resource: string) {
     this.app = app;
 
     this.widthSize = widthSize;
