@@ -9,7 +9,7 @@ export const startGameButton = (onClick: () => void) => {
   const buttonX = centerX - width / 2;
   const buttonY = centerY - height / 2;
 
-  const button = new CustomButton(width, height, { x: buttonX, y: buttonY }, onClick, false, "blue", "Start game");
+  const button = new CustomButton(width, height, { x: buttonX, y: buttonY }, onClick, "blue", "Start game");
 
   return button;
 };

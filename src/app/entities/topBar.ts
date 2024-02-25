@@ -1,6 +1,5 @@
 import * as PIXI from "pixi.js";
 import { appConfig } from "../../app";
-import { toggleFullScreenButton } from "../ui/buttons/fullscreenToggler";
 
 export class TopBarContainer extends PIXI.Container {
   private progressBar: PIXI.Graphics;
@@ -12,7 +11,7 @@ export class TopBarContainer extends PIXI.Container {
   private characterIcon: PIXI.Sprite;
   private finishIcon: PIXI.Sprite;
 
-  constructor(x: number, y: number, width: number, height: number, toggleFullScreenCallback: () => void) {
+  constructor(x: number, y: number, width: number, height: number) {
     super();
     this.position.set(x, y);
     this.progressWidth = width - 4 * appConfig.constants.BASE_SIZE;
@@ -23,9 +22,7 @@ export class TopBarContainer extends PIXI.Container {
     this.characterIcon = this.createCharacterIcon();
     this.finishIcon = this.createFinishIcon();
 
-    const fullScreenButton = toggleFullScreenButton(toggleFullScreenCallback);
-
-    this.addChild(this.progressBar, this.scoreText, this.finishIcon, this.characterIcon, fullScreenButton);
+    this.addChild(this.progressBar, this.scoreText, this.finishIcon, this.characterIcon);
   }
 
   public update(characterPosX: number) {

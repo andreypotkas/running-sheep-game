@@ -11,7 +11,7 @@ export const restartGameButton = (characterX: number, onClick: () => void) => {
   const buttonX = windowCenterX - buttonWidth / 2;
   const buttonY = windowCenterY - buttonHeight / 2;
 
-  const button = new CustomButton(buttonWidth, buttonHeight, { x: buttonX, y: buttonY }, onClick, false, "blue", "Restart game");
+  const button = new CustomButton(buttonWidth, buttonHeight, { x: buttonX, y: buttonY }, onClick, "blue", "Restart game");
 
   return button;
 };

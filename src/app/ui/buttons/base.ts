@@ -8,7 +8,7 @@ export class CustomButton extends Graphics {
   buttonHeight: number;
   buttonColor: string;
 
-  constructor(buttonWidth: number, buttonHeight: number, position: { x: number; y: number }, onClick: () => void, isHideOnClick: boolean, buttonColor: string, text?: string, image?: string) {
+  constructor(buttonWidth: number, buttonHeight: number, position: { x: number; y: number }, handle: () => void, buttonColor: string, text?: string, image?: string) {
     super();
     this.buttonColor = buttonColor;
     this.buttonWidth = buttonWidth;
@@ -26,11 +26,6 @@ export class CustomButton extends Graphics {
     }
 
     this.eventMode = "dynamic";
-
-    const handle = () => {
-      this.setVisibility(isHideOnClick);
-      onClick();
-    };
 
     this.on("click", handle);
     this.on("tap", handle);

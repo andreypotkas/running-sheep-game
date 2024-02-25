@@ -7,7 +7,7 @@ export const toggleFullScreenButton = (onClick: () => void) => {
   const width = appConfig.constants.BASE_SIZE * 0.75;
   const height = appConfig.constants.BASE_SIZE * 0.75;
 
-  const button = new CustomButton(width, height, { x: x, y: y }, onClick, true, "transparent", "", "assets/img/fullscreen.png");
+  const button = new CustomButton(width, height, { x: x, y: y }, onClick, "transparent", "", "assets/img/fullscreen.png");
 
   return button;
 };

@@ -6,9 +6,10 @@ import { TopBarContainer } from "../../entities/topBar";
 import { CollisionDetector } from "../../lib/collisionDetector";
 import { restartGameButton } from "../../ui/buttons/restartGame";
 import { GameApp } from "../app";
-import { initCommonAppElements } from "./utils";
+import { initCommonAppElements } from "../utils";
 
 export class Game extends PIXI.Container {
+  public app: GameApp;
   public ground: GroundInterface;
   public character: CharacterInterface;
   public collisionDetector: CollisionDetector;
@@ -16,55 +17,35 @@ export class Game extends PIXI.Container {
 
   constructor(app: GameApp) {
     super();
-    const { background, mountains, clouds, character, ground, topBar, finishLine } = initCommonAppElements(() => {});
+    const { background, mountains, clouds, character, ground, topBar, finishLine } = initCommonAppElements(this);
+    this.app = app;
     this.ground = ground;
     this.character = character;
     this.topBar = topBar;
-    this.collisionDetector = new CollisionDetector(this.ground, this.character, () => {});
+    this.collisionDetector = new CollisionDetector(this.ground, this.character, this.endGame.bind(this));
 
     this.addChild(background, ...mountains, this.ground.sprite, ...clouds, topBar, finishLine);
     this.ground.addPitsAndBoxes();
     this.addChild(character.sprite);
 
-    // const startButton = startGameButton(this.container, this.runGame.bind(this));
-    // this.container.addChild(startButton);
-
-    addEventListener("orientationchange", (event) => {
-      this.restartGame();
-    });
-
-    // document.body.appendChild(this.container);
+    this.runGame();
   }
 
-  // public toggleFullScreen(): void {
-  //   if (!appConfig.constants.IS_FULLSCREEN) {
-  //     if (this.container.requestFullscreen) {
-  //       appConfig.constants.IS_FULLSCREEN = true;
-  //       this.container.requestFullscreen();
-  //       const scalingFactor = appConfig.constants.IS_FULLSCREEN ? appConfig.constants.SCALING_FACTOR : 1;
-  //       this.container.scale.set(1, scalingFactor);
-  //     }
-  //   } else {
-  //     if (document.exitFullscreen) {
-  //       appConfig.constants.IS_FULLSCREEN = false;
-  //       document.exitFullscreen();
-  //       this.container.scale.set(1, 1);
-  //     }
-  //   }
-  // }
+  public runGame(): void {
+    this.character.handleStartGame();
+    this.app.app.ticker.add(this.update, this);
+  }
 
-  public update() {
-    // this.character.handleStartGame();
+  public endGame(): void {
+    this.app.app.ticker.remove(this.update, this);
+    this.showGameOverScreen();
+  }
 
-    this.character.update();
-    this.collisionDetector.checkObstacleCollisions();
-    this.topBar.update(this.character.x);
-    // this.checkIsCharacterFinished();
-
-    if (this.character.x > window.innerWidth / 4) {
-      this.moveStage();
-      this.topBar.moveForward();
-    }
+  private checkIsCharacterFinished() {
+    const { GAME_WIDTH, APP_WIDTH } = appConfig.constants;
+    const finish = GAME_WIDTH - APP_WIDTH;
+    const isFinished = this.character.rightX >= finish;
+    if (isFinished) this.endGame();
   }
 
   private showGameOverScreen(): void {
@@ -76,13 +57,19 @@ export class Game extends PIXI.Container {
     this.position.x -= appConfig.constants.HORIZONTAL_MOVE_STEP;
   }
 
-  // private checkIsCharacterFinished() {
-  //   const finish = appConfig.constants.GAME_WIDTH - window.screen.width;
-  //   const isFinished = this.character.rightX >= finish;
-  //   if (isFinished) this.endGame();
-  // }
-
   private restartGame() {
-    window.location.reload();
+    return this.app.runMenu();
+  }
+
+  private update() {
+    this.topBar.update(this.character.x);
+    this.character.update();
+    this.collisionDetector.checkObstacleCollisions();
+    this.checkIsCharacterFinished();
+
+    if (this.character.x > window.innerWidth / 4) {
+      this.moveStage();
+      this.topBar.moveForward();
+    }
   }
 }
