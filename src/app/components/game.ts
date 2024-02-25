@@ -9,33 +9,32 @@ import { startGameButton } from "../ui/buttons/startGame";
 import { initCommonAppElements } from "./utils";
 
 export class Game {
-  public readonly app: PIXI.Application<HTMLCanvasElement>;
-  public readonly ground: GroundInterface;
-  public readonly character: CharacterInterface;
-  public readonly collisionDetector: CollisionDetector;
-  public readonly topBar: TopBarContainer;
+  public app: PIXI.Application<HTMLCanvasElement>;
+  public ground: GroundInterface;
+  public character: CharacterInterface;
+  public collisionDetector: CollisionDetector;
+  public topBar: TopBarContainer;
 
   constructor() {
-    const { app, background, mountains, clouds, character, ground, topBar } = initCommonAppElements(this.toggleFullScreen.bind(this));
+    const { app, background, mountains, clouds, character, ground, topBar, finishLine } = initCommonAppElements(this.toggleFullScreen.bind(this));
     this.app = app;
     this.ground = ground;
     this.character = character;
     this.topBar = topBar;
     this.collisionDetector = new CollisionDetector(this.ground, this.character, this.endGame.bind(this));
 
-    this.app.stage.addChild(background, ...mountains, this.ground.sprite, ...clouds, topBar);
+    this.app.stage.addChild(background, ...mountains, this.ground.sprite, ...clouds, topBar, finishLine);
     this.ground.addPitsAndBoxes();
     this.app.stage.addChild(character.sprite);
 
     const startButton = startGameButton(this.app, this.runGame.bind(this));
     this.app.stage.addChild(startButton);
 
-    window.addEventListener("resize", () => {
-      app.renderer.resize(appConfig.constants.APP_WIDTH, appConfig.constants.APP_HEIGHT);
+    addEventListener("orientationchange", (event) => {
+      this.restartGame();
     });
 
     document.body.appendChild(this.app.view);
-    this.app.view.requestFullscreen();
   }
 
   public toggleFullScreen(): void {
@@ -50,8 +49,7 @@ export class Game {
       if (document.exitFullscreen) {
         appConfig.constants.IS_FULLSCREEN = false;
         document.exitFullscreen();
-        const scalingFactor = appConfig.constants.IS_FULLSCREEN ? appConfig.constants.SCALING_FACTOR : 1;
-        this.app.stage.scale.set(1, scalingFactor);
+        this.app.stage.scale.set(1, 1);
       }
     }
   }
@@ -62,12 +60,10 @@ export class Game {
     this.app.ticker.add((delta) => {
       this.character.update();
       this.collisionDetector.checkObstacleCollisions();
-      this.checkIsCharacterFinished();
       this.topBar.update(this.character.x);
+      this.checkIsCharacterFinished();
 
       if (this.character.x > window.innerWidth / 4) {
-        console.log(this.character.x, window.innerWidth / 4);
-
         this.moveStage();
         this.topBar.moveForward();
       }
@@ -75,8 +71,6 @@ export class Game {
   }
 
   public endGame(): void {
-    console.log("end game");
-
     this.app.ticker.stop();
     this.showGameOverScreen();
   }

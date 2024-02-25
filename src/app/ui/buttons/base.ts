@@ -25,7 +25,7 @@ export class CustomButton extends Graphics {
       this.addImage(image);
     }
 
-    this.interactive = true;
+    this.eventMode = "dynamic";
 
     const handle = () => {
       this.setVisibility(isHideOnClick);

@@ -5,7 +5,7 @@ export const restartGameButton = (characterX: number, onClick: () => void) => {
   const windowCenterX = characterX + window.innerWidth / 4;
   const windowCenterY = window.innerHeight / 2;
 
-  const buttonWidth = appConfig.constants.BASE_SIZE * 4;
+  const buttonWidth = appConfig.constants.BASE_SIZE * 5;
   const buttonHeight = appConfig.constants.BASE_SIZE;
 
   const buttonX = windowCenterX - buttonWidth / 2;

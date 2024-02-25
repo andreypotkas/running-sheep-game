@@ -35,13 +35,7 @@ export class Ground implements GroundInterface {
 
   constructor(app: PIXI.Application<HTMLCanvasElement>) {
     this.app = app;
-    this.sprite = createSpriteFromImage(
-      "assets/img/ground.png",
-      appConfig.constants.APP_WIDTH,
-      appConfig.constants.GROUND_HEIGHT,
-      0,
-      appConfig.constants.APP_HEIGHT - appConfig.constants.GROUND_HEIGHT
-    );
+    this.sprite = createSpriteFromImage("assets/img/ground.png", appConfig.constants.APP_WIDTH, appConfig.constants.GROUND_HEIGHT, 0, appConfig.constants.GROUND_LEVEL);
   }
 
   public addPitsAndBoxes(): void {

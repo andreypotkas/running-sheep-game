@@ -47,8 +47,8 @@ export class AppConfiguration implements AppConfigurationInterface {
       if (this.isLandscapeOrientation) {
         appWidth = window.innerWidth * 6;
         appHeight = window.innerHeight;
-        baseSize = 50;
-        verticalMoveStep = 50;
+        baseSize = 40;
+        verticalMoveStep = 40;
         horizontalMoveStep = 2;
       } else {
         appWidth = window.innerWidth * 10;
@@ -60,9 +60,9 @@ export class AppConfiguration implements AppConfigurationInterface {
     } else {
       baseSize = 100;
       verticalMoveStep = 100;
-      appWidth = window.innerWidth * 4;
+      appWidth = window.innerWidth * 6;
       appHeight = window.innerHeight;
-      horizontalMoveStep = 5;
+      horizontalMoveStep = 15;
     }
 
     const groundHeight = 2.5 * baseSize;

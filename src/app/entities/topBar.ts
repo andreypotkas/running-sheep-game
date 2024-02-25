@@ -84,7 +84,7 @@ export class TopBarContainer extends PIXI.Container {
   }
 
   public updateScore(score: number): void {
-    this.scoreText.text = `${score}`;
+    this.scoreText.text = `${score > 0 ? score : 0}`;
   }
 
   public moveForward() {
