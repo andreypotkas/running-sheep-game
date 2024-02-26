@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import { appConfig } from "../../../app";
 import { GameApp } from "../app";
-import { initMenuEnvaironment } from "../utils";
+import { initMenuScene } from "../utils";
 
 export class Menu extends PIXI.Container {
   private app: GameApp;
@@ -9,15 +9,11 @@ export class Menu extends PIXI.Container {
   constructor(app: GameApp) {
     super();
     this.app = app;
-    initMenuEnvaironment(this, this.toggleFullScreen.bind(this), this.onStartButtonClick.bind(this));
+    initMenuScene(this, this.toggleFullScreen.bind(this), this.onStartButtonClick.bind(this));
   }
 
   private onStartButtonClick(): void {
     this.app.runGame();
-  }
-
-  private getBestScore(): number {
-    return 0;
   }
 
   public toggleFullScreen(): void {

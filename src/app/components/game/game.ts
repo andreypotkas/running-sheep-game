@@ -1,50 +1,45 @@
 import * as PIXI from "pixi.js";
 import { appConfig } from "../../../app";
 import { CharacterInterface } from "../../entities/character";
-import { GroundInterface } from "../../entities/ground";
 import { TopBarContainer } from "../../entities/topBar";
 import { CollisionDetector } from "../../lib/collisionDetector";
 import { restartGameButton } from "../../ui/buttons/restartGame";
 import { GameApp } from "../app";
-import { initCommonAppElements } from "../utils";
+import { initGameScene } from "../utils";
 
 export class Game extends PIXI.Container {
   public app: GameApp;
-  public ground: GroundInterface;
-  public character: CharacterInterface;
+  public character!: CharacterInterface;
   public collisionDetector: CollisionDetector;
-  public topBar: TopBarContainer;
+  public topBar!: TopBarContainer;
 
   constructor(app: GameApp) {
     super();
-    const { background, mountains, clouds, character, ground, topBar, finishLine } = initCommonAppElements(this);
+    const { character, ground } = initGameScene(this);
     this.app = app;
-    this.ground = ground;
-    this.character = character;
-    this.topBar = topBar;
-    this.collisionDetector = new CollisionDetector(this.ground, this.character, this.endGame.bind(this));
-
-    this.addChild(background, ...mountains, this.ground.sprite, ...clouds, topBar, finishLine);
-    this.ground.addPitsAndBoxes();
-    this.addChild(character.sprite);
+    this.collisionDetector = new CollisionDetector(ground, character, this.endGame.bind(this));
 
     this.runGame();
   }
 
   public runGame(): void {
     this.character.handleStartGame();
+    this.addChild(this.character.sprite);
+
     this.app.app.ticker.add(this.update, this);
   }
 
   public endGame(): void {
     this.app.app.ticker.remove(this.update, this);
     this.showGameOverScreen();
+    const prevBestScore = +JSON.parse(localStorage.getItem("bestScore") ?? "");
+    const currentBestScore = Math.max(prevBestScore, this.character.x / 10);
+
+    localStorage.setItem("bestScore", JSON.stringify(currentBestScore));
   }
 
   private checkIsCharacterFinished() {
-    const { GAME_WIDTH, APP_WIDTH } = appConfig.constants;
-    const finish = GAME_WIDTH - APP_WIDTH;
-    const isFinished = this.character.rightX >= finish;
+    const isFinished = this.character.rightX >= appConfig.constants.FINISH_POINT;
     if (isFinished) this.endGame();
   }
 
@@ -58,7 +53,7 @@ export class Game extends PIXI.Container {
   }
 
   private restartGame() {
-    return this.app.runMenu();
+    return this.app.runGame();
   }
 
   private update() {

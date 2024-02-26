@@ -13,6 +13,7 @@ export type AppConfigObject = {
   HORIZONTAL_MOVE_STEP: number;
   IS_FULLSCREEN: boolean;
   SCALING_FACTOR: number;
+  FINISH_POINT: number;
 };
 
 export class AppConfiguration implements AppConfigurationInterface {
@@ -69,6 +70,7 @@ export class AppConfiguration implements AppConfigurationInterface {
     const groundHeight = 2.5 * baseSize;
     const groundLevel = appHeight - groundHeight;
     const appWidth = window.innerWidth;
+    const finishPoint = gameWidth - appWidth;
 
     return {
       APP_WIDTH: appWidth,
@@ -81,6 +83,7 @@ export class AppConfiguration implements AppConfigurationInterface {
       HORIZONTAL_MOVE_STEP: horizontalMoveStep,
       IS_FULLSCREEN: this.isFullScreen,
       SCALING_FACTOR: this.scalingFactor,
+      FINISH_POINT: finishPoint,
     };
   }
 
