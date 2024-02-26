@@ -6,6 +6,12 @@ Players control a character, guiding it through obstacles to reach the finish li
 
 ## Getting Started
 
+Project started from typescript pixi webpack configuration template.
+
+```bash
+git clone https://github.com/ltruchot/seed-pixi-typescript.git
+```
+
 To run the game locally, follow these steps:
 
 1. Clone the repository:
