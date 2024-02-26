@@ -31,6 +31,7 @@ export class Game extends PIXI.Container {
   }
 
   public endGame(): void {
+    this.character.handleEndGame();
     const prevBestScore = localStorage.getItem("bestScore");
     if (prevBestScore) {
       const currentBestScore = Math.max(+JSON.parse(prevBestScore), this.character.x / 10);

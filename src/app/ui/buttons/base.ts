@@ -44,7 +44,7 @@ export class CustomButton extends Graphics {
   private addText(text: string): void {
     const textStyle = new TextStyle({
       fontFamily: "Arial",
-      fontSize: appConfig.constants.BASE_SIZE * 0.75,
+      fontSize: appConfig.constants.BASE_SIZE * 0.4,
       fontWeight: "bold",
       fill: ["#ffffff", "yellow"],
       stroke: "#4a1850",

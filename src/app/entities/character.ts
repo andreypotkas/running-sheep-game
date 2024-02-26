@@ -9,6 +9,7 @@ export interface CharacterInterface extends MovableEntityInterface {
   movingPlatforms: PlatformInterface[];
   update(): void;
   handleStartGame(): void;
+  handleEndGame(): void;
 }
 
 export class Character extends MovableEntity {
@@ -20,6 +21,7 @@ export class Character extends MovableEntity {
     this.container = container;
     this.x = roundToCeilWithZeroLastDigit(window.innerWidth / 10);
   }
+  private boundHandleInteraction = this.handleInteraction.bind(this);
 
   public get movingPlatforms() {
     return this.platforms.filter((platform) => platform.isMoving);
@@ -31,8 +33,13 @@ export class Character extends MovableEntity {
   }
 
   public handleStartGame() {
-    window.addEventListener("keydown", (e) => this.handleInteraction(e));
-    window.addEventListener("touchstart", (e) => this.handleInteraction(e));
+    window.addEventListener("keydown", this.boundHandleInteraction);
+    window.addEventListener("touchstart", this.boundHandleInteraction);
+  }
+
+  public handleEndGame() {
+    window.removeEventListener("keydown", this.boundHandleInteraction);
+    window.removeEventListener("touchstart", this.boundHandleInteraction);
   }
 
   private addPlatform() {
