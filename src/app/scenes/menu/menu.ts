@@ -8,6 +8,7 @@ export class Menu extends PIXI.Container {
 
   constructor(app: MainApp) {
     super();
+
     this.app = app;
     initMenuScene(this, this.toggleFullScreen.bind(this), this.onStartButtonClick.bind(this));
   }
@@ -19,17 +20,11 @@ export class Menu extends PIXI.Container {
   public toggleFullScreen(): void {
     if (!appConfig.isFullScreen) {
       if (this.app.app.view.requestFullscreen) {
-        appConfig.isFullScreen = true;
-        appConfig.initAppConstants();
-        this.app.runMenu();
         this.app.app.view.requestFullscreen();
       }
     } else {
       if (document.exitFullscreen) {
-        appConfig.isFullScreen = false;
-        appConfig.initAppConstants();
         document.exitFullscreen();
-        this.app.runMenu();
       }
     }
   }

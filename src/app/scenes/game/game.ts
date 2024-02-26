@@ -16,6 +16,7 @@ export class Game extends PIXI.Container {
 
   constructor(app: MainApp) {
     super();
+
     const { character, ground } = initGameScene(this);
     this.app = app;
     this.collisionDetector = new CollisionDetector(ground, character, this.endGame.bind(this));

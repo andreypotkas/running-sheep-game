@@ -69,7 +69,7 @@ export class AppConfiguration implements AppConfigurationInterface {
       horizontalMoveStep = 5;
     }
 
-    const groundHeight = 2.5 * baseSize;
+    const groundHeight = 3 * baseSize;
     const groundLevel = appHeight - groundHeight;
     const appWidth = window.innerWidth;
     const finishPoint = gameWidth - appWidth;

@@ -19,8 +19,26 @@ export class MainApp {
   }
 
   private setupEventListeners(): void {
-    window.addEventListener("orientationchange", () => {
-      window.location.reload();
+    window.addEventListener("orientationchange", (e) => {
+      appConfig.initAppConstants();
+      if (this.currentScene instanceof Game) {
+        this.currentScene.endGame();
+        this.runGame();
+      } else {
+        this.runMenu();
+      }
+    });
+
+    window.addEventListener("fullscreenchange", (event) => {
+      appConfig.isFullScreen ? (appConfig.isFullScreen = false) : (appConfig.isFullScreen = true);
+
+      appConfig.initAppConstants();
+      if (this.currentScene instanceof Game) {
+        this.currentScene.endGame();
+        this.runGame();
+      } else {
+        this.runMenu();
+      }
     });
   }
 
