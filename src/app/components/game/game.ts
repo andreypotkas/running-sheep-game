@@ -1,19 +1,20 @@
 import * as PIXI from "pixi.js";
-import { appConfig } from "../../../app";
+import { appConfig, soundManager } from "../../../app";
 import { CharacterInterface } from "../../entities/character";
 import { TopBarContainer } from "../../entities/topBar";
 import { CollisionDetector } from "../../lib/collisionDetector";
+import { backToMenuButton } from "../../ui/buttons/backToMenu";
 import { restartGameButton } from "../../ui/buttons/restartGame";
-import { GameApp } from "../app";
+import { MainApp } from "../app";
 import { initGameScene } from "../utils";
 
 export class Game extends PIXI.Container {
-  public app: GameApp;
+  public app: MainApp;
   public character!: CharacterInterface;
   public collisionDetector: CollisionDetector;
   public topBar!: TopBarContainer;
 
-  constructor(app: GameApp) {
+  constructor(app: MainApp) {
     super();
     const { character, ground } = initGameScene(this);
     this.app = app;
@@ -49,8 +50,11 @@ export class Game extends PIXI.Container {
   }
 
   private showGameOverScreen(): void {
+    soundManager.playCollideSound();
+    const backToMenu = backToMenuButton(this.character.x, this.backToMenu.bind(this));
     const restartButton = restartGameButton(this.character.x, this.restartGame.bind(this));
-    this.addChild(restartButton);
+
+    this.addChild(restartButton, backToMenu);
   }
 
   private moveStage() {
@@ -59,6 +63,10 @@ export class Game extends PIXI.Container {
 
   private restartGame() {
     return this.app.runGame();
+  }
+
+  private backToMenu() {
+    return this.app.runMenu();
   }
 
   private update() {

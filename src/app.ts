@@ -1,6 +1,7 @@
 import { AppConfiguration } from "./app/appConfig";
-import { GameApp } from "./app/components/app";
+import { MainApp } from "./app/components/app";
+import { SoundManager } from "./app/lib/soundManager";
 
 export const appConfig = new AppConfiguration();
-
-const game = new GameApp();
+export const soundManager = new SoundManager();
+const game = new MainApp();

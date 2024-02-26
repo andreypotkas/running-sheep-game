@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import { soundManager } from "../../app";
 import { roundToCeilWithZeroLastDigit } from "../lib/utils";
 import { MovableEntity, MovableEntityInterface } from "./movable";
 import { Platform, PlatformInterface } from "./platform";
@@ -38,10 +39,11 @@ export class Character extends MovableEntity {
     const platform = new Platform(this.container, this.x, this.estimatedBottomY, 1, 1, "assets/img/platform.png");
     this.container.addChild(platform.sprite);
     this.platforms.push(platform);
+    soundManager.playJumpSound();
   }
 
   private handleInteraction(e: KeyboardEvent | TouchEvent) {
-    if (this.movingPlatforms.length > 3) return;
+    if (this.movingPlatforms.length > 2) return;
 
     this.moveUp();
     this.addPlatform();

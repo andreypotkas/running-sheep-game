@@ -1,12 +1,12 @@
 import * as PIXI from "pixi.js";
 import { appConfig } from "../../../app";
-import { GameApp } from "../app";
+import { MainApp } from "../app";
 import { initMenuScene } from "../utils";
 
 export class Menu extends PIXI.Container {
-  private app: GameApp;
+  private app: MainApp;
 
-  constructor(app: GameApp) {
+  constructor(app: MainApp) {
     super();
     this.app = app;
     initMenuScene(this, this.toggleFullScreen.bind(this), this.onStartButtonClick.bind(this));

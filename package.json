@@ -24,6 +24,7 @@
     "seed"
   ],
   "dependencies": {
+    "@pixi/sound": "^5.2.3",
     "gsap": "^3.12.5",
     "pixi.js": "7.4.0"
   },
