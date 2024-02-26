@@ -18,7 +18,9 @@ export class Menu extends PIXI.Container {
   }
 
   public toggleFullScreen(): void {
-    if (!appConfig.isFullScreen) {
+    appConfig.isFullScreen ? (appConfig.isFullScreen = false) : (appConfig.isFullScreen = true);
+
+    if (appConfig.isFullScreen) {
       if (this.app.app.view.requestFullscreen) {
         this.app.app.view.requestFullscreen();
       }

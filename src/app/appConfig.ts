@@ -1,4 +1,5 @@
 interface AppConfigurationInterface {
+  isLandscapeOrientation: boolean;
   isFullScreen: boolean;
   initAppConstants(): void;
 }
@@ -19,15 +20,18 @@ export type AppConfigObject = {
 export class AppConfiguration implements AppConfigurationInterface {
   private userAgent: string;
   private isMobileDevice: boolean;
-  private isLandscapeOrientation: boolean;
   private pixelRatio: number;
   private initialWindowHeight: number;
+  private initialWindowWidth: number;
+
+  public isLandscapeOrientation: boolean;
   public isFullScreen: boolean = false;
   public constants!: AppConfigObject;
   public scalingFactor: number = window.screen.height / window.innerHeight;
 
   constructor() {
     this.initialWindowHeight = window.innerHeight;
+    this.initialWindowWidth = window.innerWidth;
     this.userAgent = navigator.userAgent;
     this.isMobileDevice = this.detectMobileDevice();
     this.isLandscapeOrientation = this.detectLandscapeOrientation();
@@ -50,13 +54,13 @@ export class AppConfiguration implements AppConfigurationInterface {
     if (this.isMobileDevice) {
       if (this.isLandscapeOrientation) {
         gameWidth = window.innerWidth * 6;
-        appHeight = this.isFullScreen ? window.screen.height : this.initialWindowHeight;
+        appHeight = this.isFullScreen ? window.screen.height : window.innerHeight;
         baseSize = 40;
         verticalMoveStep = 40;
         horizontalMoveStep = 2;
       } else {
         gameWidth = window.innerWidth * 10;
-        appHeight = this.isFullScreen ? window.screen.height : this.initialWindowHeight;
+        appHeight = this.isFullScreen ? window.screen.height : window.innerHeight;
         baseSize = 50;
         verticalMoveStep = 50;
         horizontalMoveStep = 2;
@@ -65,13 +69,13 @@ export class AppConfiguration implements AppConfigurationInterface {
       baseSize = 100;
       verticalMoveStep = 100;
       gameWidth = window.innerWidth * 6;
-      appHeight = this.isFullScreen ? window.screen.height : this.initialWindowHeight;
+      appHeight = this.isFullScreen ? window.screen.height : window.innerHeight;
       horizontalMoveStep = 5;
     }
 
     const groundHeight = 3 * baseSize;
     const groundLevel = appHeight - groundHeight;
-    const appWidth = window.innerWidth;
+    const appWidth = this.isFullScreen ? window.screen.width : window.innerWidth;
     const finishPoint = gameWidth - appWidth;
 
     this.constants = {
