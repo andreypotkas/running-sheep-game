@@ -100,7 +100,7 @@ export function initMenuScene(container: PIXI.Container, toggleFullScreenCallbac
   const textSize = appConfig.constants.BASE_SIZE * 0.75;
   const bestScore = JSON.parse(localStorage.getItem("bestScore") ?? "0");
   const titleText = createText(`Running Sheep`.toUpperCase(), textSize, "yellow", appConfig.constants.APP_WIDTH / 2, appConfig.constants.BASE_SIZE / 2);
-  const bestScoreText = createText(`Best Score: ${bestScore}`, textSize, "blue", appConfig.constants.APP_WIDTH / 2, appConfig.constants.GROUND_LEVEL);
+  const bestScoreText = createText(`Best Score: ${bestScore}`, textSize, "blue", appConfig.constants.APP_WIDTH / 2, appConfig.constants.APP_HEIGHT - appConfig.constants.BASE_SIZE);
   const startButton = startGameButton(startGameCallback);
   const fullscreenButton = toggleFullScreenButton(toggleFullScreenCallback);
 
