@@ -21,7 +21,6 @@ export class MainApp {
   private setupEventListeners(): void {
     window.addEventListener("resize", (e) => {
       appConfig.initAppConstants();
-      console.log(window.innerWidth);
 
       if (this.currentScene instanceof Game) {
         this.currentScene.endGame();
@@ -30,17 +29,6 @@ export class MainApp {
         this.runMenu();
       }
     });
-
-    // window.addEventListener("fullscreenchange", (event) => {
-
-    //   appConfig.initAppConstants();
-    //   if (this.currentScene instanceof Game) {
-    //     this.currentScene.endGame();
-    //     this.runGame();
-    //   } else {
-    //     this.runMenu();
-    //   }
-    // });
   }
 
   public runGame() {
