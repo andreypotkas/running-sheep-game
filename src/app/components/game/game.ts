@@ -46,7 +46,7 @@ export class Game extends PIXI.Container {
   private showGameOverScreen(): void {
     const restartButton = restartGameButton(this.character.x, this.restartGame.bind(this));
     this.addChild(restartButton);
-    // this.app.app.render();
+    this.app.app.render();
   }
 
   private moveStage() {
