@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import { appConfig } from "../../../app";
-import { createSpriteFromImage, createText } from "../../lib/utils";
+import { createText } from "../../lib/utils";
 import { MainApp } from "../app";
 
 export class Loading extends PIXI.Container {
@@ -13,7 +13,12 @@ export class Loading extends PIXI.Container {
     this.app = app;
     const { BASE_SIZE, APP_WIDTH, APP_HEIGHT } = appConfig.constants;
 
-    const background = createSpriteFromImage("assets/img/base-bg.jpg", APP_WIDTH, APP_HEIGHT, 0, 0);
+    const background = new PIXI.Graphics();
+
+    background.beginFill(0xadd8e6);
+    background.drawRect(0, 0, appConfig.constants.APP_WIDTH, appConfig.constants.APP_HEIGHT);
+    background.endFill();
+
     const textSize = appConfig.constants.BASE_SIZE * 0.75;
     this.loadingText = createText(`Loading... ${0}%`, textSize, "yellow", APP_WIDTH / 2, APP_HEIGHT / 2 - BASE_SIZE);
     this.progressBar = new PIXI.Graphics();
@@ -47,7 +52,7 @@ export class Loading extends PIXI.Container {
       const { BASE_SIZE, APP_WIDTH, APP_HEIGHT } = appConfig.constants;
       this.loadingText.text = `Loading... ${Math.ceil(progress * 100)}%`;
 
-      const progressBarWidth = APP_WIDTH - BASE_SIZE * progress;
+      const progressBarWidth = APP_WIDTH * progress;
       this.progressBar.clear();
       this.progressBar.beginFill(0xffff00);
       this.progressBar.drawRect(BASE_SIZE / 2, APP_HEIGHT / 2, progressBarWidth, BASE_SIZE / 2);

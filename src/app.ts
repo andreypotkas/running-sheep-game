@@ -1,6 +1,6 @@
 import { AppConfiguration } from "./app/appConfig";
-import { MainApp } from "./app/components/app";
 import { SoundManager } from "./app/lib/soundManager";
+import { MainApp } from "./app/scenes/app";
 
 export const appConfig = new AppConfiguration();
 export const soundManager = new SoundManager();

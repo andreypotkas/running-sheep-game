@@ -7,7 +7,7 @@ export const startGameButton = (onClick: () => void) => {
   const width = appConfig.constants.BASE_SIZE * 4;
   const height = appConfig.constants.BASE_SIZE * 1.25;
   const buttonX = centerX - width / 2;
-  const buttonY = centerY;
+  const buttonY = centerY + 20;
 
   const button = new CustomButton(width, height, { x: buttonX, y: buttonY }, onClick, "blue", "Start game");
 
