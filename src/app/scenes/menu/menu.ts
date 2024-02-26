@@ -17,18 +17,19 @@ export class Menu extends PIXI.Container {
   }
 
   public toggleFullScreen(): void {
-    if (!appConfig.constants.IS_FULLSCREEN) {
+    if (!appConfig.isFullScreen) {
       if (this.app.app.view.requestFullscreen) {
-        appConfig.constants.IS_FULLSCREEN = true;
+        appConfig.isFullScreen = true;
+        appConfig.initAppConstants();
+        this.app.runMenu();
         this.app.app.view.requestFullscreen();
-        const scalingFactor = appConfig.constants.IS_FULLSCREEN ? appConfig.constants.SCALING_FACTOR : 1;
-        this.app.app.stage.scale.set(1, scalingFactor);
       }
     } else {
       if (document.exitFullscreen) {
-        appConfig.constants.IS_FULLSCREEN = false;
+        appConfig.isFullScreen = false;
+        appConfig.initAppConstants();
         document.exitFullscreen();
-        this.app.app.stage.scale.set(1, 1);
+        this.app.runMenu();
       }
     }
   }

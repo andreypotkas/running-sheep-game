@@ -70,6 +70,8 @@ export function initGameScene(container: Game) {
 }
 
 export function initMenuScene(container: PIXI.Container, toggleFullScreenCallback: () => void, startGameCallback: () => void) {
+  console.log(appConfig.constants.APP_HEIGHT);
+
   const sun = new PIXI.Graphics();
   sun.beginFill(0xffff00);
   sun.drawCircle(0, 0, appConfig.constants.BASE_SIZE * 0.75);
