@@ -30,12 +30,12 @@ export class Game extends PIXI.Container {
   }
 
   public endGame(): void {
-    this.app.app.ticker.remove(this.update, this);
-    this.showGameOverScreen();
     const prevBestScore = +JSON.parse(localStorage.getItem("bestScore") ?? "");
     const currentBestScore = Math.max(prevBestScore, this.character.x / 10);
 
     localStorage.setItem("bestScore", JSON.stringify(currentBestScore));
+    this.showGameOverScreen();
+    this.app.app.ticker.remove(this.update, this);
   }
 
   private checkIsCharacterFinished() {
@@ -46,6 +46,7 @@ export class Game extends PIXI.Container {
   private showGameOverScreen(): void {
     const restartButton = restartGameButton(this.character.x, this.restartGame.bind(this));
     this.addChild(restartButton);
+    // this.app.app.render();
   }
 
   private moveStage() {
