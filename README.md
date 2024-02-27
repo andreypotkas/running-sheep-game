@@ -4,13 +4,13 @@ Running Sheep is a simple browser-based game built using Pixi.js, GSAP, and Type
 The game features three main scenes: loading, menu, and game level.
 Players control a character, guiding it through obstacles to reach the finish line.
 
-## Getting Started
-
 Project started from typescript pixi webpack configuration template.
 
 ```bash
-git clone https://github.com/ltruchot/seed-pixi-typescript.git
+ https://github.com/ltruchot/seed-pixi-typescript.git
 ```
+
+## Getting Started
 
 To run the game locally, follow these steps:
 
