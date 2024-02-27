@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
-import type { MovableEntityInterface } from "./movable";
-import { MovableEntity } from "./movable";
+import type { MovableEntityInterface } from "../base/movable";
+import { MovableEntity } from "../base/movable";
 
 export interface PlatformInterface extends MovableEntityInterface {
   isMoving: boolean;

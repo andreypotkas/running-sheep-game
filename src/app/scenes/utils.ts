@@ -1,10 +1,10 @@
 import gsap from "gsap";
 import * as PIXI from "pixi.js";
 import { appConfig } from "../../app";
-import { Character } from "../entities/character";
-import { Cloud, CloudConfig } from "../entities/cloud";
-import { Ground } from "../entities/ground";
+import { Character } from "../entities/character/character";
 import { TopBarContainer } from "../entities/topBar";
+import { Cloud, CloudConfig } from "../entities/world/cloud";
+import { Ground } from "../entities/world/ground";
 import { createSpriteFromImage, createText } from "../lib/utils";
 import { toggleFullScreenButton } from "../ui/buttons/fullscreenToggler";
 import { startGameButton } from "../ui/buttons/startGame";

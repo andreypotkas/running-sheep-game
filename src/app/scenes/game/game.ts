@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import { appConfig, soundManager } from "../../../app";
-import { CharacterInterface } from "../../entities/character";
+import { CharacterInterface } from "../../entities/character/character";
 import { TopBarContainer } from "../../entities/topBar";
 import { CollisionDetector } from "../../lib/collisionDetector";
 import { backToMenuButton } from "../../ui/buttons/backToMenu";

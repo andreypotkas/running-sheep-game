@@ -1,9 +1,9 @@
 import { appConfig } from "../../app";
-import { BoxInterface } from "../entities/box";
-import { CharacterInterface } from "../entities/character";
-import { GroundInterface } from "../entities/ground";
-import { PitInterface } from "../entities/pit";
-import { PlatformInterface } from "../entities/platform";
+import { CharacterInterface } from "../entities/character/character";
+import { PlatformInterface } from "../entities/character/platform";
+import { BoxInterface } from "../entities/obstacles/box";
+import { PitInterface } from "../entities/obstacles/pit";
+import { GroundInterface } from "../entities/world/ground";
 
 export class CollisionDetector {
   private readonly ground: GroundInterface;

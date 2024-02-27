@@ -1,8 +1,8 @@
 import * as PIXI from "pixi.js";
-import { appConfig } from "../../app";
-import { createSpriteFromImage, roundToCeilWithZeroLastDigit } from "../lib/utils";
-import { Box } from "./box";
-import { Pit } from "./pit";
+import { appConfig } from "../../../app";
+import { createSpriteFromImage, roundToCeilWithZeroLastDigit } from "../../lib/utils";
+import { Box } from "../obstacles/box";
+import { Pit } from "../obstacles/pit";
 
 export interface GroundInterface {
   sprite: PIXI.Sprite;
