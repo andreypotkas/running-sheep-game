@@ -22,10 +22,10 @@ export class Cloud {
     const cloudWidth = appConfig.constants.BASE_SIZE * config.width;
 
     const posY = (Math.random() * appConfig.constants.APP_HEIGHT) / 3;
-    this.posX = appConfig.constants.BASE_SIZE * 10 + index * 5 * appConfig.constants.BASE_SIZE;
+    this.posX = index * 5 * appConfig.constants.BASE_SIZE;
 
     this.sprite = createSpriteFromImage(`assets/img/clouds/${config.imageId}.png`, cloudWidth, cloudHeight, this.posX, posY);
-    const initialDuration = (this.posX / this.containerWidth) * 20;
+    const initialDuration = (this.posX / this.containerWidth) * 100;
 
     this.animateSprite(initialDuration);
   }
