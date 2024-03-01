@@ -4,4 +4,4 @@ import { MainApp } from "./app/scenes/app";
 
 export const appConfig = new AppConfiguration();
 export const soundManager = new SoundManager();
-const game = new MainApp();
+const app = new MainApp();
