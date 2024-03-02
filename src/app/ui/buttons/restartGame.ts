@@ -8,7 +8,7 @@ export const restartGameButton = (characterX: number, onClick: () => void) => {
   const width = appConfig.constants.BASE_SIZE;
   const height = appConfig.constants.BASE_SIZE;
 
-  const buttonX = windowCenterX - 2 * width;
+  const buttonX = windowCenterX + 2 * width;
   const buttonY = windowCenterY;
 
   const button = new CommonButton(width, height, { x: buttonX, y: buttonY }, onClick, "", "assets/img/ui/restart.png");

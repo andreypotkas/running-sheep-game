@@ -3,6 +3,7 @@ import { appConfig, soundManager } from "../../../app";
 import { CharacterInterface } from "../../entities/character/character";
 import { TopBarContainer } from "../../entities/topBar";
 import { CollisionDetector } from "../../lib/collisionDetector";
+import { createGradientText } from "../../lib/utils";
 import { backToMenuButton } from "../../ui/buttons/backToMenu";
 import { restartGameButton } from "../../ui/buttons/restartGame";
 import { MainApp } from "../app";
@@ -34,15 +35,16 @@ export class Game extends PIXI.Container {
   public endGame(): void {
     this.character.handleEndGame();
     const prevBestScore = localStorage.getItem("bestScore");
+    const currentScore = this.character.x / 10;
+
     if (prevBestScore) {
-      const currentBestScore = Math.max(+JSON.parse(prevBestScore), this.character.x / 10);
+      const currentBestScore = Math.max(+JSON.parse(prevBestScore), currentScore);
       localStorage.setItem("bestScore", JSON.stringify(currentBestScore));
     } else {
-      const currentBestScore = this.character.x / 10;
-      localStorage.setItem("bestScore", JSON.stringify(currentBestScore));
+      localStorage.setItem("bestScore", JSON.stringify(currentScore));
     }
 
-    this.showGameOverScreen();
+    this.showGameOverScreen(currentScore);
     this.app.app.ticker.remove(this.update, this);
   }
 
@@ -51,12 +53,14 @@ export class Game extends PIXI.Container {
     if (isFinished) this.endGame();
   }
 
-  private showGameOverScreen(): void {
+  private showGameOverScreen(currentScore: number): void {
+    const { BASE_SIZE, APP_WIDTH, APP_HEIGHT } = appConfig.constants;
     soundManager.playCollideSound();
     const backToMenu = backToMenuButton(this.character.x, this.backToMenu.bind(this));
     const restartButton = restartGameButton(this.character.x, this.restartGame.bind(this));
+    const scoreText = createGradientText(`YOUR SCORE: ${currentScore}`, BASE_SIZE, this.character.x + APP_WIDTH / 4, APP_HEIGHT / 4);
 
-    this.addChild(restartButton, backToMenu);
+    this.addChild(restartButton, backToMenu, scoreText);
   }
 
   private moveStage() {

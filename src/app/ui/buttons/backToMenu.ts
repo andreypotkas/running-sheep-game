@@ -8,7 +8,7 @@ export const backToMenuButton = (characterX: number, onClick: () => void) => {
   const width = appConfig.constants.BASE_SIZE * 4;
   const height = appConfig.constants.BASE_SIZE;
 
-  const buttonX = windowCenterX;
+  const buttonX = windowCenterX - width * 0.75;
   const buttonY = windowCenterY;
 
   const button = new CommonButton(width, height, { x: buttonX, y: buttonY }, onClick, "Menu ");
