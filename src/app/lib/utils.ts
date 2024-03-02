@@ -1,5 +1,4 @@
 import * as PIXI from "pixi.js";
-import { appConfig } from "../../app";
 
 export function roundToCeilWithZeroLastDigit(number: number) {
   let roundedNumber = Math.ceil(number);
@@ -21,21 +20,37 @@ export function createSpriteFromImage(image: string, width: number, height: numb
   return sprite;
 }
 
-export function createText(content: string, fontSize: number, color: string, x: number, y: number) {
-  const skewStyle = new PIXI.TextStyle({
+export function createGraphics(color: string | number, width: number, height: number) {
+  const graphics = new PIXI.Graphics();
+
+  graphics.beginFill(color);
+  graphics.drawRect(0, 0, width, height);
+  graphics.endFill();
+  return graphics;
+}
+
+export function createGradientText(content: string, size: number, x: number, y: number) {
+  const style = new PIXI.TextStyle({
     fontFamily: "Arial",
-    fontSize: appConfig.constants.BASE_SIZE * 0.5,
+    fontSize: size,
     fontWeight: "bold",
-    fill: ["#ffffff", "#00ff99"], // gradient
+    fill: ["#ffffff", "#00ff99"],
     stroke: "#4a1850",
     strokeThickness: 5,
-    dropShadow: true,
-    dropShadowColor: "#000000",
-    dropShadowBlur: 4,
-    dropShadowAngle: Math.PI / 6,
-    dropShadowDistance: 6,
   });
-  const text = new PIXI.Text(content, skewStyle);
+  const text = new PIXI.Text(content, style);
+  text.position.set(x - text.width / 2, y);
+  return text;
+}
+
+export function createButtonText(content: string, size: number, x: number, y: number) {
+  const style = new PIXI.TextStyle({
+    fontFamily: "Arial",
+    fontSize: size,
+    fontWeight: "bold",
+    fill: "yellow",
+  });
+  const text = new PIXI.Text(content, style);
   text.position.set(x - text.width / 2, y);
   return text;
 }

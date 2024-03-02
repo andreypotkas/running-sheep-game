@@ -1,15 +1,16 @@
 import { appConfig } from "../../../app";
-import { CustomButton } from "./base";
+import { CommonButton } from "./button";
 
 export const startGameButton = (onClick: () => void) => {
-  const centerX = appConfig.constants.APP_WIDTH / 2;
-  const centerY = appConfig.constants.APP_HEIGHT / 2;
-  const width = appConfig.constants.BASE_SIZE * 4;
-  const height = appConfig.constants.BASE_SIZE * 1.25;
+  const { APP_HEIGHT, APP_WIDTH, BASE_SIZE } = appConfig.constants;
+  const centerX = APP_WIDTH / 2;
+  const centerY = APP_HEIGHT / 2;
+  const width = BASE_SIZE * 4;
+  const height = BASE_SIZE;
   const buttonX = centerX - width / 2;
   const buttonY = centerY + 20;
 
-  const button = new CustomButton(width, height, { x: buttonX, y: buttonY }, onClick, "blue", "Start game");
+  const button = new CommonButton(width, height, { x: buttonX, y: buttonY }, onClick, "Start game");
 
   return button;
 };

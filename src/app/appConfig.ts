@@ -5,6 +5,7 @@ interface AppConfigurationInterface {
 }
 
 export type AppConfigObject = {
+  STAGE_SIZE: number;
   APP_WIDTH: number;
   GAME_WIDTH: number;
   APP_HEIGHT: number;
@@ -13,7 +14,6 @@ export type AppConfigObject = {
   BASE_SIZE: number;
   VERTICAL_MOVE_STEP: number;
   HORIZONTAL_MOVE_STEP: number;
-  SCALING_FACTOR: number;
   FINISH_POINT: number;
 };
 
@@ -21,17 +21,11 @@ export class AppConfiguration implements AppConfigurationInterface {
   private userAgent: string;
   private isMobileDevice: boolean;
   private pixelRatio: number;
-  private initialWindowHeight: number;
-  private initialWindowWidth: number;
-
   public isLandscapeOrientation: boolean;
   public isFullScreen: boolean = false;
   public constants!: AppConfigObject;
-  public scalingFactor: number = window.screen.height / window.innerHeight;
 
   constructor() {
-    this.initialWindowHeight = window.innerHeight;
-    this.initialWindowWidth = window.innerWidth;
     this.userAgent = navigator.userAgent;
     this.isMobileDevice = this.detectMobileDevice();
     this.isLandscapeOrientation = this.detectLandscapeOrientation();
@@ -44,41 +38,42 @@ export class AppConfiguration implements AppConfigurationInterface {
     this.isMobileDevice = this.detectMobileDevice();
     this.isLandscapeOrientation = this.detectLandscapeOrientation();
     this.pixelRatio = window.devicePixelRatio;
-
-    let gameWidth;
     let appHeight;
     let baseSize;
     let verticalMoveStep;
     let horizontalMoveStep;
+    let stageSize;
 
     if (this.isMobileDevice) {
       if (this.isLandscapeOrientation) {
-        gameWidth = window.innerWidth * 6;
+        stageSize = 10;
         appHeight = this.isFullScreen ? window.screen.height : window.innerHeight;
         baseSize = 40;
         verticalMoveStep = 40;
         horizontalMoveStep = 2;
       } else {
-        gameWidth = window.innerWidth * 10;
+        stageSize = 15;
         appHeight = this.isFullScreen ? window.screen.height : window.innerHeight;
         baseSize = 50;
         verticalMoveStep = 50;
         horizontalMoveStep = 2;
       }
     } else {
+      stageSize = 10;
       baseSize = 100;
       verticalMoveStep = 100;
-      gameWidth = window.innerWidth * 6;
       appHeight = this.isFullScreen ? window.screen.height : window.innerHeight;
       horizontalMoveStep = 5;
     }
 
+    const gameWidth = window.innerWidth * stageSize;
     const groundHeight = 3 * baseSize;
     const groundLevel = appHeight - groundHeight;
     const appWidth = this.isFullScreen ? window.screen.width : window.innerWidth;
     const finishPoint = gameWidth - appWidth;
 
     this.constants = {
+      STAGE_SIZE: stageSize,
       APP_WIDTH: appWidth,
       GAME_WIDTH: gameWidth,
       APP_HEIGHT: appHeight,
@@ -87,7 +82,6 @@ export class AppConfiguration implements AppConfigurationInterface {
       BASE_SIZE: baseSize,
       VERTICAL_MOVE_STEP: verticalMoveStep,
       HORIZONTAL_MOVE_STEP: horizontalMoveStep,
-      SCALING_FACTOR: this.scalingFactor,
       FINISH_POINT: finishPoint,
     };
   }

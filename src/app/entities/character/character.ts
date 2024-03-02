@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
-import { soundManager } from "../../app";
-import { roundToCeilWithZeroLastDigit } from "../lib/utils";
-import { MovableEntity, MovableEntityInterface } from "./movable";
+import { soundManager } from "../../../app";
+import { roundToCeilWithZeroLastDigit } from "../../lib/utils";
+import { MovableEntity, MovableEntityInterface } from "../base/movable";
 import { Platform, PlatformInterface } from "./platform";
 
 export interface CharacterInterface extends MovableEntityInterface {
