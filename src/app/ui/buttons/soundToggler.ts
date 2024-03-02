@@ -3,7 +3,7 @@ import { ToggleButton } from "./toggleButton";
 
 export const toggleSoundButton = (onClick: () => void) => {
   const { APP_WIDTH, BASE_SIZE } = appConfig.constants;
-  const x = APP_WIDTH - BASE_SIZE * 1.1;
+  const x = appConfig.detectLandscapeOrientation() ? APP_WIDTH - BASE_SIZE * 2.5 : APP_WIDTH - BASE_SIZE * 1.1;
   const y = BASE_SIZE * 1.6;
   const width = BASE_SIZE;
   const height = BASE_SIZE;

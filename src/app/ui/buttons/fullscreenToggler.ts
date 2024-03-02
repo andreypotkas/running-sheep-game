@@ -3,7 +3,7 @@ import { ToggleButton } from "./toggleButton";
 
 export const toggleFullScreenButton = (onClick: () => void) => {
   const { APP_WIDTH, BASE_SIZE } = appConfig.constants;
-  const x = APP_WIDTH - BASE_SIZE * 1.1;
+  const x = appConfig.detectLandscapeOrientation() ? APP_WIDTH - BASE_SIZE * 2.5 : APP_WIDTH - BASE_SIZE * 1.1;
   const y = BASE_SIZE * 0.4;
   const width = BASE_SIZE;
   const height = BASE_SIZE;
