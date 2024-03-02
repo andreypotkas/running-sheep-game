@@ -58,7 +58,7 @@ export class Game extends PIXI.Container {
     soundManager.playCollideSound();
     const backToMenu = backToMenuButton(this.character.x, this.backToMenu.bind(this));
     const restartButton = restartGameButton(this.character.x, this.restartGame.bind(this));
-    const scoreText = createGradientText(`YOUR SCORE: ${currentScore}`, BASE_SIZE, this.character.x + APP_WIDTH / 4, APP_HEIGHT / 4);
+    const scoreText = createGradientText(`YOUR SCORE: ${currentScore}`, BASE_SIZE * 0.75, this.character.x + APP_WIDTH / 4, APP_HEIGHT / 4);
 
     this.addChild(restartButton, backToMenu, scoreText);
   }
