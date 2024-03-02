@@ -1,5 +1,4 @@
 import * as PIXI from "pixi.js";
-import { appConfig } from "../../app";
 
 export function roundToCeilWithZeroLastDigit(number: number) {
   let roundedNumber = Math.ceil(number);
@@ -30,19 +29,26 @@ export function createGraphics(color: string | number, width: number, height: nu
   return graphics;
 }
 
-export function createGradientText(content: string, x: number, y: number) {
+export function createGradientText(content: string, size: number, x: number, y: number) {
   const style = new PIXI.TextStyle({
     fontFamily: "Arial",
-    fontSize: appConfig.constants.BASE_SIZE * 0.5,
+    fontSize: size,
     fontWeight: "bold",
     fill: ["#ffffff", "#00ff99"],
     stroke: "#4a1850",
     strokeThickness: 5,
-    dropShadow: true,
-    dropShadowColor: "#000000",
-    dropShadowBlur: 4,
-    dropShadowAngle: Math.PI / 6,
-    dropShadowDistance: 6,
+  });
+  const text = new PIXI.Text(content, style);
+  text.position.set(x - text.width / 2, y);
+  return text;
+}
+
+export function createButtonText(content: string, size: number, x: number, y: number) {
+  const style = new PIXI.TextStyle({
+    fontFamily: "Arial",
+    fontSize: size,
+    fontWeight: "bold",
+    fill: "yellow",
   });
   const text = new PIXI.Text(content, style);
   text.position.set(x - text.width / 2, y);

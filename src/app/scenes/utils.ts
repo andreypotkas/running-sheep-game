@@ -1,11 +1,12 @@
 import * as PIXI from "pixi.js";
-import { appConfig } from "../../app";
+import { appConfig, soundManager } from "../../app";
 import { Character } from "../entities/character/character";
 import { TopBarContainer } from "../entities/topBar";
 import { Cloud, CloudConfig } from "../entities/world/cloud";
 import { Ground } from "../entities/world/ground";
 import { createGradientText, createSpriteFromImage } from "../lib/utils";
 import { toggleFullScreenButton } from "../ui/buttons/fullscreenToggler";
+import { toggleSoundButton } from "../ui/buttons/soundToggler";
 import { startGameButton } from "../ui/buttons/startGame";
 import { Game } from "./game/game";
 
@@ -69,12 +70,13 @@ export function initMenuScene(container: PIXI.Container, toggleFullScreenCallbac
   const clouds: PIXI.Sprite[] = cloudsData.slice(0, 10).map((item: CloudConfig, index) => new Cloud(appConfig.constants.APP_WIDTH, item, index).sprite);
 
   const bestScore = JSON.parse(localStorage.getItem("bestScore") ?? "0");
-  const titleText = createGradientText(`Running Sheep`.toUpperCase(), appConfig.constants.APP_WIDTH / 2, appConfig.constants.BASE_SIZE / 2);
-  const bestScoreText = createGradientText(`Best Score: ${bestScore}`, appConfig.constants.APP_WIDTH / 2, appConfig.constants.APP_HEIGHT - appConfig.constants.BASE_SIZE * 1.5);
+  const titleText = createGradientText(`Running Sheep`.toUpperCase(), BASE_SIZE * 0.55, appConfig.constants.APP_WIDTH / 2, appConfig.constants.BASE_SIZE / 2);
+  const bestScoreText = createGradientText(`Best Score: ${bestScore}`, BASE_SIZE * 0.45, appConfig.constants.APP_WIDTH / 2, appConfig.constants.APP_HEIGHT - appConfig.constants.BASE_SIZE * 1.5);
   const startButton = startGameButton(startGameCallback);
   const fullscreenButton = toggleFullScreenButton(toggleFullScreenCallback);
+  const soundButton = toggleSoundButton(() => soundManager.toggleSound());
 
-  container.addChild(background, ...mountains, sun, ground, ...clouds, characterIcon, titleText, bestScoreText, startButton, fullscreenButton);
+  container.addChild(background, ...mountains, sun, ground, ...clouds, characterIcon, titleText, bestScoreText, startButton, fullscreenButton, soundButton);
 }
 
 function createSun() {

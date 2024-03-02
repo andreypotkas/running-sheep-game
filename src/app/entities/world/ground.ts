@@ -17,15 +17,20 @@ const groundPitSizes = [
   { w: 2, h: 2 },
   { w: 2, h: 2 },
   { w: 2, h: 2 },
+  { w: 2, h: 2 },
+  { w: 2, h: 2 },
+  { w: 2, h: 2 },
 ];
 
 const groundBoxSizes = [
+  { w: 1, h: 2 },
   { w: 1, h: 3 },
-  { w: 1, h: 1 },
   { w: 1, h: 2 },
   { w: 1, h: 1 },
+  { w: 1, h: 3 },
   { w: 1, h: 2 },
   { w: 1, h: 1 },
+  { w: 1, h: 3 },
 ];
 
 export class Ground implements GroundInterface {
@@ -40,7 +45,7 @@ export class Ground implements GroundInterface {
   }
 
   public addPitsAndBoxes(): void {
-    const spaceBetweenObstacles = appConfig.constants.GAME_WIDTH / ((groundBoxSizes.length + groundPitSizes.length) * 2);
+    const spaceBetweenObstacles = (appConfig.constants.GAME_WIDTH - appConfig.constants.APP_WIDTH * 2) / (groundBoxSizes.length + groundPitSizes.length);
 
     groundPitSizes.forEach((item, index) => {
       const pitX = roundToCeilWithZeroLastDigit(window.innerWidth + index * spaceBetweenObstacles * 2);

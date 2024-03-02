@@ -4,12 +4,15 @@ export class SoundManager {
   private backgroundMusic: Sound.Sound;
   private jumpSound: Sound.Sound;
   private collide: Sound.Sound;
+  public isSoundOff: boolean = false;
 
   constructor() {
     this.backgroundMusic = Sound.Sound.from("assets/sounds/bg.mp3");
-    this.backgroundMusic.volume = 0.1;
     this.jumpSound = Sound.Sound.from("assets/sounds/jump.mp3");
     this.collide = Sound.Sound.from("assets/sounds/collide.mp3");
+    this.backgroundMusic.volume = 0.1;
+    this.jumpSound.volume = 0.5;
+    this.collide.volume = 0.5;
   }
 
   public playBackgroundMusic(loop: boolean = true): void {
@@ -39,5 +42,19 @@ export class SoundManager {
 
   public playCollideSound(): void {
     this.collide.play();
+  }
+
+  public toggleSound() {
+    if (!this.isSoundOff) {
+      this.isSoundOff = true;
+      this.backgroundMusic.volume = 0;
+      this.jumpSound.volume = 0;
+      this.collide.volume = 0;
+    } else {
+      this.isSoundOff = false;
+      this.backgroundMusic.volume = 0.1;
+      this.jumpSound.volume = 0.5;
+      this.collide.volume = 0.5;
+    }
   }
 }

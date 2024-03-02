@@ -1,13 +1,14 @@
 import { appConfig } from "../../../app";
-import { CustomButton } from "./base";
+import { ToggleButton } from "./toggleButton";
 
 export const toggleFullScreenButton = (onClick: () => void) => {
-  const x = window.innerWidth - appConfig.constants.BASE_SIZE;
-  const y = appConfig.constants.BASE_SIZE * 0.5;
-  const width = appConfig.constants.BASE_SIZE * 0.75;
-  const height = appConfig.constants.BASE_SIZE * 0.75;
+  const { APP_WIDTH, BASE_SIZE } = appConfig.constants;
+  const x = APP_WIDTH - BASE_SIZE * 1.1;
+  const y = BASE_SIZE * 0.4;
+  const width = BASE_SIZE;
+  const height = BASE_SIZE;
 
-  const button = new CustomButton(width, height, { x: x, y: y }, onClick, "transparent", "", "assets/img/fullscreen.png");
+  const button = new ToggleButton(width, height, { x: x, y: y }, onClick, "assets/img/ui/fullscreen-in.png", "assets/img/ui/fullscreen-out.png", appConfig.isFullScreen);
 
   return button;
 };
